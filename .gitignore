@@ -1,0 +1,18 @@
+# Vídeos locais da Copa 2026 (direitos autorais)
+* de Junho/
+* de Julho/
+Aberturas/
+
+# Arquivos de mídia
+*.mp4
+*.webm
+*.mkv
+*.avi
+*.temp.*
+
+# Logs e arquivos temporários
+*.log
+.system_generated/
+cup_raw.txt
+cup_finals_raw.txt
+/__pycache__/

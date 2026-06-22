@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copa do Mundo FIFA 2026 - Tabela & Vídeos</title>
+    <!-- Bootstrap 5.3 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6.5.2 CSS CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        @keyframes pulseLive {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0b0f19;
+            background-image:
+                radial-gradient(at 10% 20%, rgba(0, 242, 254, 0.05) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(255, 0, 127, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .header-title {
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 30%, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .match-card {
+            background: rgba(22, 28, 45, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .match-card:hover {
+            border-color: rgba(0, 242, 254, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.15);
+        }
+
+        .game-num {
+            font-weight: 800;
+            color: #00f2fe;
+            font-size: 1.1rem;
+        }
+
+        .badge-fase {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.4em 0.8em;
+            background-color: rgba(0, 242, 254, 0.1);
+            color: #00f2fe;
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 6px;
+        }
+
+        .flag-emoji {
+            font-size: 1.4rem;
+        }
+
+        .score-box {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+
+        .btn-play {
+            background: linear-gradient(135deg, #ff007f, #ff0055);
+            border: none;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(255, 0, 127, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-play:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 0, 127, 0.5);
+            background: linear-gradient(135deg, #ff1a8c, #ff1a66);
+            color: white;
+        }
+
+        .btn-disabled {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #6b7280;
+            cursor: not-allowed;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+
+        .search-input {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            color: white !important;
+            padding-left: 2.5rem !important;
+        }
+
+        .search-input:focus {
+            border-color: #00f2fe !important;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.25) !important;
+        }
+
+        /* Modal styling */
+        .modal-content {
+            background-color: #161c2d;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 */
+            height: 0;
+            background-color: black;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            overflow: hidden;
+        }
+
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Standings Styles */
+        .standings-card {
+            background: rgba(22, 28, 45, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 1.25rem;
+        }
+
+        .standings-table th,
+        .standings-table td {
+            padding: 0.6rem 0.75rem;
+            font-size: 0.9rem;
+            vertical-align: middle;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .standings-table th {
+            font-weight: 700;
+            color: #9ca3af;
+        }
+
+        .standings-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pos-num {
+            font-weight: 700;
+            width: 25px;
+            text-align: center;
+        }
+
+        .pos-1,
+        .pos-2 {
+            color: #22c55e !important;
+        }
+
+        .pos-3 {
+            color: #eab308 !important;
+        }
+
+        .nav-pills .nav-link {
+            color: #9ca3af;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin: 0 0.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-pills .nav-link.active {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: #0b0f19;
+            font-weight: 600;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+        }
+
+        .nav-pills .nav-link:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="py-3">
+        <div class="container">
+            <!-- Parte superior: Título + Botões -->
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+                <div class="d-flex align-items-center gap-2">
+                    <h1 class="display-4 header-title mb-0">
+                        <i class="fa-solid fa-trophy text-warning me-2"></i>
+                        <span data-i18n="title">Copa do Mundo FIFA 2026</span>
+                    </h1>
+                </div>
+
+                <div class="d-flex align-items-center gap-3 mt-3 mt-md-0">
+                    <!-- GitHub -->
+                    <a href="https://github.com/uzielweb/copa-do-mundo-2026" target="_blank"
+                        class="btn btn-sm btn-outline-secondary rounded-3" title="GitHub Repository">
+                        <i class="fa-brands fa-github fs-6"></i>
+                    </a>
+
+                    <!-- Troca de idioma -->
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="button" class="btn btn-outline-info active" onclick="changeLanguage('pt')"
+                            id="lang-btn-pt">PT</button>
+                        <button type="button" class="btn btn-outline-info" onclick="changeLanguage('en')"
+                            id="lang-btn-en">EN</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Descrição / Subtitle -->
+            <div class="text-center text-md-start">
+                <p class="text-secondary lead fs-6" data-i18n="subtitle">
+                    Tabela interativa com os 104 jogos e melhores momentos integrados
+                </p>
+
+                <div class="p-3 mb-3 bg-dark bg-opacity-50 text-light rounded-4">
+                    <p>
+                        Este site exibe vídeos locais (.mp4) e links do YouTube para cada partida.
+                        A função <code>playVideo</code> abre o vídeo em um modal; os botões de YouTube
+                        abrem a gravação em nova aba.
+                        Um script em background (<code>autoUpdateYouTubeLinks</code>) usa
+                        <code>api.allorigins.win</code> para atualizar automaticamente os botões do YouTube sem
+                        recarregar a página.
+                        <br><br>
+                        Além disso, existe um script Python (<code>update_cup_videos.py</code>) que
+                        gera os vídeos locais a partir das fontes oficiais. Os vídeos não foram enviados
+                        ao repositório para evitar problemas de direitos autorais.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="row">
+                <!-- Header -->
+
+                <!-- Jogo Ao Vivo (Live Match Widget) -->
+                <div class="row g-3 mb-4 justify-content-center d-none" id="liveMatchContainer">
+                    <div class="col-md-10 col-lg-8">
+                        <div class="p-3 rounded-4 border border-info border-opacity-25 text-center position-relative shadow-lg"
+                            style="background: rgba(22, 28, 45, 0.7); backdrop-filter: blur(12px);">
+                            <span id="liveBadge" class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger shadow" style="font-size: 0.8rem; animation: pulseLive 2s infinite;">
+                                <i id="liveBadgeIcon" class="fa-solid fa-circle-dot me-1"></i> <span id="liveBadgeText">AO VIVO</span>
+                            </span>
+                            <div class="d-flex align-items-center justify-content-center gap-4 mt-2">
+                                <!-- Team 1 -->
+                                <div class="d-flex flex-column align-items-center" style="width: 30%;">
+                                    <span class="flag-emoji display-4 mb-1" id="liveTeam1Flag">🏳️</span>
+                                    <span class="fw-bold text-light text-truncate w-100" id="liveTeam1Name" style="font-size: 1.1rem;">Time 1</span>
+                                    <div id="liveTeam1Goals" class="small text-secondary mt-1 text-center" style="font-size: 0.8rem; max-height: 60px; overflow-y: auto; scrollbar-width: none;"></div>
+                                </div>
+                                <!-- Score -->
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <span class="fw-bolder text-info" id="liveScore1" style="font-size: 2.5rem; line-height: 1;">0</span>
+                                        <span class="text-secondary fs-4 fw-bold px-2">X</span>
+                                        <span class="fw-bolder text-info" id="liveScore2" style="font-size: 2.5rem; line-height: 1;">0</span>
+                                    </div>
+                                    <span class="badge bg-info text-dark px-3 py-1 fs-6" id="liveClock">00'</span>
+                                </div>
+                                <!-- Team 2 -->
+                                <div class="d-flex flex-column align-items-center" style="width: 30%;">
+                                    <span class="flag-emoji display-4 mb-1" id="liveTeam2Flag">🏳️</span>
+                                    <span class="fw-bold text-light text-truncate w-100" id="liveTeam2Name" style="font-size: 1.1rem;">Time 2</span>
+                                    <div id="liveTeam2Goals" class="small text-secondary mt-1 text-center" style="font-size: 0.8rem; max-height: 60px; overflow-y: auto; scrollbar-width: none;"></div>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-secondary small fw-semibold" id="liveMatchDesc">Copa do Mundo FIFA 2026</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cerimônias de Abertura -->
+                <div class="row g-3 mb-4 justify-content-center">
+                    <div class="col-md-10 col-lg-8">
+                        <div class="p-3 rounded-4 border border-secondary border-opacity-10 text-center"
+                            style="background: rgba(22, 28, 45, 0.4); backdrop-filter: blur(8px);">
+                            <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+                                <i class="fa-solid fa-circle-play text-danger"></i>
+                                <span class="fw-bold text-light text-uppercase tracking-wider small"
+                                    style="letter-spacing: 0.5px;" data-i18n="headerOpenings">Cerimônias de Abertura
+                                    Oficial</span>
+                            </div>
+                            <div class="row g-3 justify-content-center">
+                                <div class="col-12 col-md-6 col-lg-3 d-flex flex-column align-items-center">
+                                    <span class="small mb-1 text-center" data-i18n="opCombined">Abertura Geral (México, Canadá e EUA)</span>
+                                    <div class="d-flex gap-1 justify-content-center flex-wrap">
+                                        <button class="btn btn-sm btn-play px-2" style="width: auto;"
+                                            onclick="playVideo('Abertura Geral (México, Canadá e EUA)', 'Aberturas/CONFIRA%20TODOS%20OS%20SHOWS%20DE%20ABERTURA%20DA%20COPA%20DO%20MUNDO%20FIFA%E2%84%A2%202026%20%EF%BD%9C%20M%C3%89XICO%2C%20CANAD%C3%81%20E%20ESTADOS%20UNIDOS.mp4')"><i
+                                                class="fa-solid fa-play"></i> Local</button>
+                                        <a href="https://www.youtube.com/watch?v=nZS5CJGFni0" target="_blank"
+                                            class="btn btn-sm btn-outline-danger px-2" style="width: auto;"><i
+                                                class="fa-brands fa-youtube"></i> YouTube</a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3 d-flex flex-column align-items-center">
+                                    <span class="small mb-1 text-center" data-i18n="opMexico">Abertura - México (Estádio Azteca)</span>
+                                    <div class="d-flex gap-1 justify-content-center flex-wrap">
+                                        <button class="btn btn-sm btn-play px-2" style="width: auto;"
+                                            onclick="playVideo('Cerimônia de Abertura - México', 'Aberturas/CONFIRA%20A%20CERIM%C3%94NIA%20DE%20ABERTURA%20DA%20COPA%20DIRETO%20DO%20EST%C3%81DIO%20AZTECA%20%EF%BD%9C%20COPA%20DO%20MUNDO%20FIFA%E2%84%A2%202026.mp4')"><i
+                                                class="fa-solid fa-play"></i> Local</button>
+                                        <a href="https://www.youtube.com/watch?v=aLk3lQcc0OM" target="_blank"
+                                            class="btn btn-sm btn-outline-danger px-2" style="width: auto;"><i
+                                                class="fa-brands fa-youtube"></i> YouTube</a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3 d-flex flex-column align-items-center">
+                                    <span class="small mb-1 text-center" data-i18n="opCanada">Abertura - Canadá (Toronto)</span>
+                                    <div class="d-flex gap-1 justify-content-center flex-wrap">
+                                        <button class="btn btn-sm btn-play px-2" style="width: auto;"
+                                            onclick="playVideo('Cerimônia de Abertura - Canadá', 'Aberturas/CONFIRA%20A%20CERIM%C3%94NIA%20DE%20ABERTURA%20DO%20CANAD%C3%81%20DIRETO%20DO%20TORONTO%20STADIUM%20%EF%BD%9C%20COPA%20DO%20MUNDO%20FIFA%E2%84%A2%202026.mp4')"><i
+                                                class="fa-solid fa-play"></i> Local</button>
+                                        <a href="https://www.youtube.com/watch?v=KyepZZsqFdw" target="_blank"
+                                            class="btn btn-sm btn-outline-danger px-2" style="width: auto;"><i
+                                                class="fa-brands fa-youtube"></i> YouTube</a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3 d-flex flex-column align-items-center">
+                                    <span class="small mb-1 text-center" data-i18n="opUsa">Abertura - EUA (Los Angeles)</span>
+                                    <div class="d-flex gap-1 justify-content-center flex-wrap">
+                                        <button class="btn btn-sm btn-play px-2" style="width: auto;"
+                                            onclick="playVideo('Cerimônia de Abertura - EUA', 'Aberturas/CONFIRA%20A%20CERIM%C3%94NIA%20DOS%20EUA%20DE%20ABERTURA%20DA%20COPA%20COM%20ANITTA%20E%20LISA%20%EF%BD%9C%20COPA%20DO%20MUNDO%20FIFA%E2%84%A2%202026.mp4')"><i
+                                                class="fa-solid fa-play"></i> Local</button>
+                                        <a href="https://www.youtube.com/watch?v=0eZ758vtjOE" target="_blank"
+                                            class="btn btn-sm btn-outline-danger px-2" style="width: auto;"><i
+                                                class="fa-brands fa-youtube"></i> YouTube</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Tabs Navigation -->
+                <ul class="nav nav-pills justify-content-center mb-4" id="mainTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active px-4 py-2" id="matches-tab" data-bs-toggle="pill"
+                            data-bs-target="#matches-pane" type="button" role="tab"><i
+                                class="fa-solid fa-calendar-days me-2"></i><span
+                                data-i18n="tabMatches">Jogos</span></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link px-4 py-2" id="standings-tab" data-bs-toggle="pill"
+                            data-bs-target="#standings-pane" type="button" role="tab" onclick="updateStandings()"><i
+                                class="fa-solid fa-users me-2"></i><span data-i18n="tabGroups">Grupos</span></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link px-4 py-2" id="overall-standings-tab" data-bs-toggle="pill"
+                            data-bs-target="#overall-standings-pane" type="button" role="tab"
+                            onclick="updateOverallStandings()"><i class="fa-solid fa-ranking-star me-2"></i><span
+                                data-i18n="tabOverall">Classificação Geral</span></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link px-4 py-2" id="rules-tab" data-bs-toggle="pill"
+                            data-bs-target="#rules-pane" type="button" role="tab"><i
+                                class="fa-solid fa-book-open me-2"></i><span data-i18n="tabRules">Regras
+                                & Novidades</span></button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="mainTabContent">
+                    <!-- Jogos Tab Pane -->
+                    <div class="tab-pane fade show active" id="matches-pane" role="tabpanel"
+                        aria-labelledby="matches-tab" tabindex="0">
+                        <!-- Controls (Filter/Search) -->
+                        <div
+                            class="row g-3 mb-4 align-items-center bg-dark bg-opacity-50 p-3 rounded-4 border border-secondary border-opacity-10 backdrop-blur">
+                            <div class="col-md-4">
+                                <div class="search-container">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" id="searchInput"
+                                        class="form-control form-control-lg search-input fs-6"
+                                        data-i18n="searchPlaceholder"
+                                        placeholder="Pesquisar seleção, grupo ou estádio...">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="d-flex flex-wrap gap-2 justify-content-md-end">
+                                    <button class="btn btn-outline-secondary rounded-3 active"
+                                        onclick="filterStage('all')"><i class="fa-solid fa-list me-1"></i> <span
+                                            data-i18n="btnAll">Todos</span></button>
+                                    <button class="btn btn-outline-secondary rounded-3"
+                                        onclick="filterStage('videos')"><i class="fa-solid fa-video me-1"></i> <span
+                                            data-i18n="btnWithVideo">Com
+                                            Vídeo</span></button>
+                                    <div class="dropdown">
+                                        <button type="button"
+                                            class="btn btn-outline-secondary rounded-3 dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-expanded="false" id="groupDropdownBtn">
+                                            <i class="fa-solid fa-users me-1"></i> <span
+                                                data-i18n="btnGroups">Grupos</span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end"
+                                            style="max-height: 300px; overflow-y: auto;">
+                                            <li><a class="dropdown-item" href="#" onclick="filterGroup('all-groups')"
+                                                    data-i18n="allGroups">Todos os Grupos</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterGroup('Grupo A')">Grupo
+                                                    A</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterGroup('Grupo B')">Grupo
+                                                    B</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterGroup('Grupo C')">Grupo
+                                                    C</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterGroup('Grupo D')">Grupo
+                                                    D</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterGroup('Grupo E')">Grupo
+                                                    E</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterGroup('Grupo F')">Grupo
+                                                    F</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterGroup('Grupo G')">Grupo
+                                                    G</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterGroup('Grupo H')">Grupo
+                                                    H</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterGroup('Grupo I')">Grupo
+                                                    I</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterGroup('Grupo J')">Grupo
+                                                    J</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterGroup('Grupo K')">Grupo
+                                                    K</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterGroup('Grupo L')">Grupo
+                                                    L</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="dropdown">
+                                        <button type="button"
+                                            class="btn btn-outline-secondary rounded-3 dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-expanded="false" id="knockoutDropdownBtn">
+                                            <i class="fa-solid fa-diagram-project me-1"></i> <span id="btnKnockoutText"
+                                                data-i18n="btnKnockout">Mata-Mata</span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li><a class="dropdown-item" href="#"
+                                                    onclick="filterKnockout('all-knockouts')"
+                                                    data-i18n="allKnockouts">Todo o Mata-Mata</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="#"
+                                                    onclick="filterKnockout('16-avos de Final')"
+                                                    data-i18n="stage16">16-avos
+                                                    de Final</a></li>
+                                            <li><a class="dropdown-item" href="#"
+                                                    onclick="filterKnockout('Oitavas de Final')"
+                                                    data-i18n="stage8">Oitavas
+                                                    de Final</a></li>
+                                            <li><a class="dropdown-item" href="#"
+                                                    onclick="filterKnockout('Quartas de Final')"
+                                                    data-i18n="stage4">Quartas
+                                                    de Final</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterKnockout('Semifinal')"
+                                                    data-i18n="stageSemi">Semifinal</a></li>
+                                            <li><a class="dropdown-item" href="#"
+                                                    onclick="filterKnockout('Disputa do 3º Lugar')"
+                                                    data-i18n="stage3rd">Disputa
+                                                    do 3º Lugar</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="filterKnockout('Final')"
+                                                    data-i18n="stageFinal">Final</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="dropdown">
+                                        <button type="button"
+                                            class="btn btn-outline-secondary rounded-3 dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-expanded="false" id="dateDropdownBtn">
+                                            <i class="fa-regular fa-calendar me-1"></i> <span id="btnDateText"
+                                                data-i18n="btnDates">Datas</span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end" id="dateDropdownList" style="max-height: 300px; overflow-y: auto;">
+                                            <!-- Dynamically populated -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Matches Container (Grid List) -->
+                        <div id="matchesContainer" class="container d-flex flex-column gap-3">
+                            <!-- Content inserted dynamically by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Standings Tab Pane -->
+                    <div class="tab-pane fade" id="standings-pane" role="tabpanel" aria-labelledby="standings-tab"
+                        tabindex="0">
+                        <div class="row row-cols-1 row-cols-lg-2 g-4" id="standingsContainer">
+                            <!-- Standings grids inserted dynamically by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Overall Standings Tab Pane -->
+                    <div class="tab-pane fade" id="overall-standings-pane" role="tabpanel"
+                        aria-labelledby="overall-standings-tab" tabindex="0">
+                        <div class="standings-card mx-auto" style="max-width: 950px;">
+                            <h5 class="fw-bold mb-3 text-uppercase text-center" style="color: #00f2fe;"
+                                data-i18n="overallTitle"><i class="fa-solid fa-ranking-star me-2"></i>Classificação
+                                Geral da
+                                Fase de Grupos</h5>
+                            <p class="text-secondary small text-center mb-4" data-i18n="overallSubtitle">Classificação
+                                comparativa de todas as 48 seleções. As cores indicam a zona de classificação (Top 32
+                                avançam
+                                para o Mata-Mata).</p>
+                            <div class="table-responsive">
+                                <table class="table standings-table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style="width: 50px;" data-i18n="posCol">Pos</th>
+                                            <th data-i18n="teamCol">Seleção</th>
+                                            <th class="text-center" style="width: 70px;" data-i18n="groupCol">Grupo</th>
+                                            <th class="text-center" style="width: 50px;" data-i18n="pointsCol">P</th>
+                                            <th class="text-center" style="width: 40px;" data-i18n="gamesCol">J</th>
+                                            <th class="text-center" style="width: 40px;" data-i18n="winsCol">V</th>
+                                            <th class="text-center" style="width: 40px;" data-i18n="drawsCol">E</th>
+                                            <th class="text-center" style="width: 40px;" data-i18n="lossesCol">D</th>
+                                            <th class="text-center" style="width: 70px;" data-i18n="goalsCol">Gols</th>
+                                            <th class="text-center" style="width: 50px;" data-i18n="goalDiffCol">SG</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="overallStandingsBody">
+                                        <!-- Content inserted dynamically by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rules & News Tab Pane -->
+                    <div class="tab-pane fade" id="rules-pane" role="tabpanel" aria-labelledby="rules-tab" tabindex="0">
+                        <div class="standings-card mx-auto" style="max-width: 900px;">
+                            <h5 class="fw-bold mb-4 text-uppercase text-center" style="color: #00f2fe;"
+                                data-i18n="rulesTitle">
+                                <i class="fa-solid fa-circle-info me-2"></i>Novidades e Regras da Copa do Mundo 2026
+                            </h5>
+
+                            <div class="row g-4">
+                                <!-- Card 1: Formato -->
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded-3 border border-secondary border-opacity-10 h-100"
+                                        style="background: rgba(255, 255, 255, 0.02);">
+                                        <h6 class="fw-bold text-info mb-3" data-i18n="ruleFormatTitle"><i
+                                                class="fa-solid fa-diagram-project me-2"></i>Novo Formato de Disputa
+                                        </h6>
+                                        <ul class="small text-secondary ps-3 mb-0">
+                                            <li class="mb-2" data-i18n="ruleFormatItem1"><strong
+                                                    class="text-light">Expansão
+                                                    de
+                                                    Seleções:</strong> De 32 para 48 seleções divididas em 12 grupos de
+                                                4.
+                                            </li>
+                                            <li class="mb-2" data-i18n="ruleFormatItem2"><strong
+                                                    class="text-light">Classificação:</strong> Passam os dois melhores
+                                                de
+                                                cada
+                                                grupo e as 8 melhores terceiras colocadas gerais.</li>
+                                            <li class="mb-2" data-i18n="ruleFormatItem3"><strong
+                                                    class="text-light">Mata-Mata
+                                                    ampliado:</strong> Inserção da fase de 16-avos de Final (32
+                                                seleções),
+                                                totalizando 104 jogos na Copa.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Card 2: Dinâmica de Jogo -->
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded-3 border border-secondary border-opacity-10 h-100"
+                                        style="background: rgba(255, 255, 255, 0.02);">
+                                        <h6 class="fw-bold text-info mb-3" data-i18n="ruleDynamicTitle"><i
+                                                class="fa-solid fa-gauge-high me-2"></i>Dinâmica e Tempo de Jogo</h6>
+                                        <ul class="small text-secondary ps-3 mb-0">
+                                            <li class="mb-2" data-i18n="ruleDynamicItem1"><strong
+                                                    class="text-light">Contagem
+                                                    Regressiva de 5s:</strong> Árbitros podem acionar uma contagem de 5
+                                                segundos
+                                                para batidas de tiro de meta e laterais para evitar cera.</li>
+                                            <li class="mb-2" data-i18n="ruleDynamicItem2"><strong
+                                                    class="text-light">Substituições Expressas:</strong> O jogador
+                                                substituído
+                                                tem 10s para sair de campo. Se atrasar, o time joga com 1 a menos por 1
+                                                minuto
+                                                de punição.</li>
+                                            <li class="mb-2" data-i18n="ruleDynamicItem3"><strong
+                                                    class="text-light">Atendimento
+                                                    Médico:</strong> Jogador atendido deve ficar 1 minuto fora do campo
+                                                após
+                                                o
+                                                reinício da partida.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Card 3: Arbitragem e VAR -->
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded-3 border border-secondary border-opacity-10 h-100"
+                                        style="background: rgba(255, 255, 255, 0.02);">
+                                        <h6 class="fw-bold text-info mb-3" data-i18n="ruleVarTitle"><i
+                                                class="fa-solid fa-video me-2"></i>VAR e Tecnologia de Ponta</h6>
+                                        <ul class="small text-secondary ps-3 mb-0">
+                                            <li class="mb-2" data-i18n="ruleVarItem1"><strong class="text-light">Novo
+                                                    Escopo
+                                                    do
+                                                    VAR:</strong> Agora o VAR pode intervir em escanteios marcados
+                                                incorretamente, segundos cartões amarelos e erros de identidade de
+                                                jogadores.
+                                            </li>
+                                            <li class="mb-2" data-i18n="ruleVarItem2"><strong
+                                                    class="text-light">Impedimento
+                                                    Semiautomatizado:</strong> Rastreamento em 3D de jogadores e chips
+                                                nas
+                                                bolas
+                                                garantem precisão milimétrica e rápida.</li>
+                                            <li class="mb-2" data-i18n="ruleVarItem3"><strong class="text-light">Câmera
+                                                    de
+                                                    Árbitro:</strong> Transmissão de TV com imagens de replays sob a
+                                                perspectiva
+                                                da câmera embutida no fone do árbitro.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Card 4: Conduta e Saúde -->
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded-3 border border-secondary border-opacity-10 h-100"
+                                        style="background: rgba(255, 255, 255, 0.02);">
+                                        <h6 class="fw-bold text-info mb-3" data-i18n="ruleHealthTitle"><i
+                                                class="fa-solid fa-shield-halved me-2"></i>Conduta e Saúde Física</h6>
+                                        <ul class="small text-secondary ps-3 mb-0">
+                                            <li class="mb-2" data-i18n="ruleHealthItem1"><strong class="text-light">Fim
+                                                    do
+                                                    "Mão
+                                                    na Boca":</strong> Jogadores que cobrirem a boca para falar com
+                                                árbitros
+                                                ou
+                                                adversários durante confrontos serão advertidos ou expulsos.</li>
+                                            <li class="mb-2" data-i18n="ruleHealthItem2"><strong
+                                                    class="text-light">Paradas
+                                                    de
+                                                    Hidratação:</strong> Paradas de 3 minutos obrigatórias em cada tempo
+                                                com
+                                                compensação integral nos acréscimos.</li>
+                                            <li class="mb-2" data-i18n="ruleHealthItem3"><strong
+                                                    class="text-light">Substituição
+                                                    por Concussão:</strong> Substituição extra liberada para traumatismo
+                                                craniano avaliado em campo, sem descontar das 5 normais.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <!-- Bootstrap Video Modal -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-bottom border-secondary border-opacity-10">
+                    <h5 class="modal-title font-weight-bold" id="videoModalLabel"><i
+                            class="fa-solid fa-circle-play text-danger me-2"></i>Melhores Momentos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="stopVideo()"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="video-wrapper">
+                        <video id="videoPlayer" controls autoplay></video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Player Modal -->
+    <div class="modal fade" id="playerModal" tabindex="-1" aria-labelledby="playerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content border border-secondary border-opacity-25 shadow-lg" style="background: rgba(22, 28, 45, 0.95); backdrop-filter: blur(12px);">
+                <div class="modal-header border-bottom border-secondary border-opacity-10 position-relative">
+                    <h6 class="modal-title font-weight-bold text-info w-100 text-center" id="playerModalLabel"><i class="fa-solid fa-star me-2"></i>Craque do Gol</h6>
+                    <button type="button" class="btn-close btn-close-white position-absolute top-50 end-0 translate-middle-y me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <img id="playerModalPhoto" src="" alt="Foto do Jogador" class="img-fluid rounded-circle shadow-lg mb-3 d-none" style="width: 140px; height: 140px; object-fit: cover; border: 3px solid #00f2fe; background-color: #0b0f19;">
+                    <h5 id="playerModalName" class="fw-bold text-light mb-1">Nome</h5>
+                    <p id="playerModalInfo" class="text-secondary mb-3 small">Gol aos 00'</p>
+                    <p class="text-muted" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-info me-1"></i>Vídeo individual não disponível na API.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        let matchVideos = {};
+
+        const flags = {
+            'Mexico': '🇲🇽', 'South Africa': '🇿🇦', 'South Korea': '🇰🇷', 'Czech Republic': '🇨🇿',
+            'Canada': '🇨🇦', 'Bosnia & Herzegovina': '🇧🇦', 'Qatar': '🇶🇦', 'Switzerland': '🇨🇭',
+            'Brazil': '🇧🇷', 'Morocco': '🇲🇦', 'Haiti': '🇭🇹', 'Scotland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+            'USA': '🇺🇸', 'Paraguay': '🇵🇾', 'Australia': '🇦🇺', 'Turkey': '🇹🇷',
+            'Germany': '🇩🇪', 'Curaçao': '🇨🇼', 'Ivory Coast': '🇨🇮', 'Ecuador': '🇪🇨',
+            'Netherlands': '🇳🇱', 'Japan': '🇯🇵', 'Sweden': '🇸🇪', 'Tunisia': '🇹🇳',
+            'Belgium': '🇧🇪', 'Egypt': '🇪🇬', 'Iran': '🇮🇷', 'New Zealand': '🇳🇿',
+            'Spain': '🇪🇸', 'Cape Verde': '🇨🇻', 'Saudi Arabia': '🇸🇦', 'Uruguay': '🇺🇾',
+            'France': '🇫🇷', 'Senegal': '🇸🇳', 'Iraq': '🇮🇶', 'Norway': '🇳🇴',
+            'Argentina': '🇦🇷', 'Algeria': '🇩🇿', 'Austria': '🇦🇹', 'Jordan': '🇯🇴',
+            'Portugal': '🇵🇹', 'DR Congo': '🇨🇩', 'Uzbekistan': '🇺🇿', 'Colombia': '🇨🇴',
+            'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'Croatia': '🇭🇷', 'Ghana': '🇬🇭', 'Panama': '🇵🇦'
+        };
+
+        const daysMap = {
+            'Sun': 'Dom', 'Mon': 'Seg', 'Tue': 'Ter', 'Wed': 'Qua', 'Thu': 'Qui', 'Fri': 'Sex', 'Sat': 'Sáb'
+        };
+        const monthsMap = {
+            'June': 'Junho', 'Jun': 'Junho', 'July': 'Julho', 'Jul': 'Julho'
+        };
+
+        const translations = {
+            pt: {
+                title: "Copa do Mundo FIFA 2026",
+                subtitle: "Tabela interativa com os 104 jogos e melhores momentos integrados",
+                headerOpenings: "Cerimônias de Abertura Oficial",
+                opCombined: "Abertura Geral (México, Canadá e EUA)",
+                opMexico: "Abertura - México (Estádio Azteca)",
+                opCanada: "Abertura - Canadá (Toronto)",
+                opUsa: "Abertura - EUA (Los Angeles)",
+                tabMatches: "Jogos",
+                tabGroups: "Grupos",
+                tabOverall: "Classificação Geral",
+                tabRules: "Regras & Novidades",
+                searchPlaceholder: "Pesquisar seleção, grupo ou estádio...",
+                btnAll: "Todos",
+                btnWithVideo: "Com Vídeo",
+                btnGroups: "Grupos",
+                btnKnockout: "Mata-Mata",
+                btnDates: "Datas",
+                allDates: "Todas as Datas",
+                allGroups: "Todos os Grupos",
+                allKnockouts: "Todo o Mata-Mata",
+                stage16: "16-avos de Final",
+                stage8: "Oitavas de Final",
+                stage4: "Quartas de Final",
+                stageSemi: "Semifinal",
+                stage3rd: "Disputa do 3º Lugar",
+                stageFinal: "Final",
+                loadingText: "Buscando os placares oficiais ao vivo no GitHub...",
+                errorText: "Erro ao carregar a tabela oficial da Copa. Verifique sua conexão com a Internet.",
+                matchCardPlay: "Assistir",
+                matchCardPlayDisabled: "Sem Vídeo",
+                matchCardPlayFull: "Jogo Completo",
+                matchCardPlayHighlights: "Melhores Momentos",
+                matchCardTimeSuffix: "às",
+                matchStageGroup: "Grupo",
+                overallTitle: "Classificação Geral da Fase de Grupos",
+                overallSubtitle: "Classificação comparativa de todas as 48 seleções. As cores indicam a zona de classificação (Top 32 avançam para o Mata-Mata).",
+                posCol: "Pos",
+                teamCol: "Seleção",
+                groupCol: "Grupo",
+                pointsCol: "P",
+                gamesCol: "J",
+                winsCol: "V",
+                drawsCol: "E",
+                lossesCol: "D",
+                goalsCol: "Gols",
+                goalDiffCol: "SG",
+                rulesTitle: "Novidades e Regras da Copa do Mundo 2026",
+                ruleFormatTitle: "Novo Formato de Disputa",
+                ruleFormatItem1: "<strong class=\"text-light\">Expansão de Seleções:</strong> De 32 para 48 seleções divididas em 12 grupos de 4.",
+                ruleFormatItem2: "<strong class=\"text-light\">Classificação:</strong> Passam os dois melhores de cada grupo e as 8 melhores terceiras colocadas gerais.",
+                ruleFormatItem3: "<strong class=\"text-light\">Mata-Mata ampliado:</strong> Inserção da fase de 16-avos de Final (32 seleções), totalizando 104 jogos na Copa.",
+                ruleDynamicTitle: "Dinâmica e Tempo de Jogo",
+                ruleDynamicItem1: "<strong class=\"text-light\">Contagem Regressiva de 5s:</strong> Árbitros podem acionar uma contagem de 5 segundos para batidas de tiro de meta e laterais para evitar cera.",
+                ruleDynamicItem2: "<strong class=\"text-light\">Substituições Expressas:</strong> O jogador substituído tem 10s para sair de campo. Se atrasar, o time joga com 1 a menos por 1 minuto de punição.",
+                ruleDynamicItem3: "<strong class=\"text-light\">Atendimento Médico:</strong> Jogador atendido deve ficar 1 minuto fora do campo após o reinício da partida.",
+                ruleVarTitle: "VAR e Tecnologia de Ponta",
+                ruleVarItem1: "<strong class=\"text-light\">Novo Escopo do VAR:</strong> Agora o VAR pode intervir em escanteios marcados incorretamente, segundos cartões amarelos e erros de identidade de jogadores.",
+                ruleVarItem2: "<strong class=\"text-light\">Impedimento Semiautomatizado:</strong> Rastreamento em 3D de jogadores e chips nas bolas garantem precisão milimétrica e rápida.",
+                ruleVarItem3: "<strong class=\"text-light\">Câmera de Árbitro:</strong> Transmissão de TV com imagens de replays sob a perspectiva da câmera embutida no fone do árbitro.",
+                ruleHealthTitle: "Conduta e Saúde Física",
+                ruleHealthItem1: "<strong class=\"text-light\">Fim do \"Mão na Boca\":</strong> Jogadores que cobrirem a boca para falar com árbitros ou adversários durante confrontos serão advertidos ou expulsos.",
+                ruleHealthItem2: "<strong class=\"text-light\">Paradas de Hidratação:</strong> Paradas de 3 minutos obrigatórias em cada tempo com compensação integral nos acréscimos.",
+                ruleHealthItem3: "<strong class=\"text-light\">Substituição por Concussão:</strong> Substituição extra liberada para traumatismo craniano avaliado em campo, sem descontar das 5 normais.",
+                modalVideoTitle: "Melhores Momentos",
+                liveBadge: "AO VIVO",
+                nextBadge: "PRÓXIMO JOGO",
+                recentBadge: "ENCERRADO",
+                endOfGame: "Fim de Jogo"
+            },
+            en: {
+                title: "FIFA World Cup 2026",
+                subtitle: "Interactive schedule with all 104 matches and highlights integrated",
+                headerOpenings: "Official Opening Ceremonies",
+                opCombined: "General Opening (Mexico, Canada & USA)",
+                opMexico: "Opening - Mexico (Estadio Azteca)",
+                opCanada: "Opening - Canada (Toronto)",
+                opUsa: "Opening - USA (Los Angeles)",
+                tabMatches: "Matches",
+                tabGroups: "Groups",
+                tabOverall: "Overall Standings",
+                tabRules: "Rules & News",
+                searchPlaceholder: "Search team, group or stadium...",
+                btnAll: "All",
+                btnWithVideo: "With Video",
+                btnGroups: "Groups",
+                btnKnockout: "Knockout",
+                btnDates: "Dates",
+                allDates: "All Dates",
+                allGroups: "All Groups",
+                allKnockouts: "All Knockout Stages",
+                stage16: "Round of 32",
+                stage8: "Round of 16",
+                stage4: "Quarter-finals",
+                stageSemi: "Semifinal",
+                stage3rd: "3rd Place Playoff",
+                stageFinal: "Final",
+                loadingText: "Fetching official live scores from GitHub...",
+                errorText: "Error loading official Cup schedule. Check your Internet connection.",
+                matchCardPlay: "Watch",
+                matchCardPlayDisabled: "No Video",
+                matchCardPlayFull: "Full Match",
+                matchCardPlayHighlights: "Highlights",
+                matchCardTimeSuffix: "at",
+                matchStageGroup: "Group",
+                overallTitle: "Group Stage Overall Standings",
+                overallSubtitle: "Comparative ranking of all 48 teams. Colors indicate classification zone (Top 32 advance to Knockout stage).",
+                posCol: "Pos",
+                teamCol: "Team",
+                groupCol: "Group",
+                pointsCol: "PTS",
+                gamesCol: "PL",
+                winsCol: "W",
+                drawsCol: "D",
+                lossesCol: "L",
+                goalsCol: "Goals",
+                goalDiffCol: "GD",
+                rulesTitle: "FIFA World Cup 2026 Rules & News",
+                ruleFormatTitle: "New Competition Format",
+                ruleFormatItem1: "<strong class=\"text-light\">Team Expansion:</strong> From 32 to 48 teams divided into 12 groups of 4.",
+                ruleFormatItem2: "<strong class=\"text-light\">Qualification:</strong> Top two from each group plus the 8 best overall third-placed teams advance.",
+                ruleFormatItem3: "<strong class=\"text-light\">Expanded Knockout:</strong> Introduction of the Round of 32 (32 teams), totaling 104 matches in the tournament.",
+                ruleDynamicTitle: "Game Dynamics and Timing",
+                ruleDynamicItem1: "<strong class=\"text-light\">5s Countdown:</strong> Referees can trigger a 5-second countdown for goal kicks and throw-ins to prevent time-wasting.",
+                ruleDynamicItem2: "<strong class=\"text-light\">Express Substitutions:</strong> Substituted player has 10s to leave the pitch. If delayed, the team plays with 1 player less for a 1-minute penalty.",
+                ruleDynamicItem3: "<strong class=\"text-light\">Medical Treatment:</strong> Treated player must remain off the pitch for 1 minute after play restarts.",
+                ruleVarTitle: "VAR and Cutting-edge Tech",
+                ruleVarItem1: "<strong class=\"text-light\">New VAR Scope:</strong> VAR can now intervene in incorrectly awarded corners, second yellow cards, and player mistaken identity.",
+                ruleVarItem2: "<strong class=\"text-light\">Semi-automated Offside:</strong> 3D tracking of players and ball microchips guarantee millimetric and fast decisions.",
+                ruleVarItem3: "<strong class=\"text-light\">Referee Camera:</strong> TV broadcast with replay footage from the perspective of the camera built into the referee's headset.",
+                ruleHealthTitle: "Conduct and Physical Health",
+                ruleHealthItem1: "<strong class=\"text-light\">End of \"Hand on Mouth\":</strong> Players covering their mouths to talk to referees or opponents during confrontations will be warned or sent off.",
+                ruleHealthItem2: "<strong class=\"text-light\">Hydration Breaks:</strong> Mandatory 3-minute breaks in each half, fully compensated in injury time.",
+                ruleHealthItem3: "<strong class=\"text-light\">Concussion Substitution:</strong> Extra substitution allowed for head injuries evaluated on the field, not counting towards the 5 standard subs.",
+                modalVideoTitle: "Highlights",
+                liveBadge: "LIVE",
+                nextBadge: "UPCOMING",
+                recentBadge: "FINISHED",
+                endOfGame: "Full Time"
+            }
+        };
+
+        const phaseExplanations = {
+            pt: {
+                'Grupo': 'Fase de Grupos: 48 seleções divididas em 12 grupos de 4. As duas primeiras colocadas de cada grupo e as 8 melhores terceiras colocadas gerais avançam para o mata-mata.',
+                '16-avos de Final': '16-avos de Final: Primeira fase eliminatória (mata-mata) com 32 equipes classificados. Jogos únicos; em caso de empate, prorrogação e pênaltis.',
+                'Oitavas de Final': 'Oitavas de Final: As 16 seleções vencedoras da fase anterior duelam em jogos eliminatórios diretos.',
+                'Quartas de Final': 'Quartas de Final: Os 8 melhores países disputam as quatro vagas para a semifinal do torneio.',
+                'Semifinal': 'Semifinais: Os 4 sobreviventes jogam tudo pelas duas cobiçadas vagas na grande final.',
+                'Disputa do 3º Lugar': 'Disputa do 3º Lugar: O jogo de honra entre os perdedores das semifinais para definir o medalhista de bronze.',
+                'Final': 'Grande Final: O confronto máximo do futebol mundial que define o novo campeão do planeta.'
+            },
+            en: {
+                'Grupo': 'Group Stage: 48 teams divided into 12 groups of 4. Top two of each group and the 8 best overall third-placed teams advance to the knockout stage.',
+                '16-avos de Final': 'Round of 32: First knockout stage with 32 qualified teams. Single-leg matches; extra time and penalties if tied.',
+                'Oitavas de Final': 'Round of 16: The 16 winning teams from the previous round face off in direct elimination matches.',
+                'Quartas de Final': 'Quarter-finals: The top 8 countries compete for the four spots in the tournament semifinals.',
+                'Semifinal': 'Semifinals: The 4 survivors play for the two coveted spots in the grand final.',
+                'Disputa do 3º Lugar': '3rd Place Playoff: The match of honor between the losers of the semifinals to define the bronze medalist.',
+                'Final': 'Grand Final: The ultimate football showdown that defines the new champion of the planet.'
+            }
+        };
+
+        let currentLang = 'pt';
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+
+            // Toggle active state of buttons
+            document.getElementById('lang-btn-pt').classList.toggle('active', lang === 'pt');
+            document.getElementById('lang-btn-en').classList.toggle('active', lang === 'en');
+
+            // Update page title tag
+            document.title = translations[lang].title + " - Tabela & Vídeos";
+
+            // Translate all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key] !== undefined) {
+                    if (el.tagName === 'INPUT') {
+                        el.placeholder = translations[lang][key];
+                    } else {
+                        // Preserving icon if present inside the element
+                        const icon = el.querySelector('i');
+                        if (icon) {
+                            el.innerHTML = '';
+                            el.appendChild(icon);
+                            el.innerHTML += ' ' + translations[lang][key];
+                        } else {
+                            el.innerHTML = translations[lang][key];
+                        }
+                    }
+                }
+            });
+
+            // Refresh content view
+            populateDateFilter();
+            applyFilters();
+
+            // If the groups or overall standings tabs are active, update them too
+            if (document.getElementById('standings-tab').classList.contains('active')) {
+                updateStandings();
+            }
+            if (document.getElementById('overall-standings-tab').classList.contains('active')) {
+                updateOverallStandings();
+            }
+            
+            // Update live match widget translations
+            fetchLiveMatches();
+        }
+
+        function translateDate(dateStr) {
+            if (!dateStr) return "";
+            const parts = dateStr.split(/\s+/);
+            if (parts.length === 3) {
+                const dayW = parts[0];
+                const month = parts[1];
+                const dayN = parts[2];
+                if (currentLang === 'en') {
+                    return `${dayW}, ${month} ${dayN}`;
+                } else {
+                    const dayW_pt = daysMap[dayW] || dayW;
+                    const month_pt = monthsMap[month] || month;
+                    return `${dayW_pt}, ${dayN} de ${month_pt}`;
+                }
+            }
+            return dateStr;
+        }
+
+        const countryTranslations = {
+            'Mexico': 'México', 'South Africa': 'África do Sul', 'South Korea': 'Coreia do Sul', 'Czech Republic': 'Tchéquia',
+            'Canada': 'Canadá', 'Bosnia & Herzegovina': 'Bósnia e Herzegovina', 'Qatar': 'Catar', 'Switzerland': 'Suíça',
+            'Brazil': 'Brasil', 'Morocco': 'Marrocos', 'Haiti': 'Haiti', 'Scotland': 'Escócia',
+            'USA': 'Estados Unidos', 'Paraguay': 'Paraguai', 'Australia': 'Austrália', 'Turkey': 'Turquia',
+            'Germany': 'Alemanha', 'Curaçao': 'Curaçao', 'Ivory Coast': 'Costa do Marfim', 'Ecuador': 'Equador',
+            'Netherlands': 'Holanda', 'Japan': 'Japão', 'Sweden': 'Suécia', 'Tunisia': 'Tunísia',
+            'Belgium': 'Bélgica', 'Egypt': 'Egito', 'Iran': 'Irã', 'New Zealand': 'Nova Zelândia',
+            'Spain': 'Espanha', 'Cape Verde': 'Cabo Verde', 'Saudi Arabia': 'Arábia Saudita', 'Uruguay': 'Uruguai',
+            'France': 'França', 'Senegal': 'Senegal', 'Iraq': 'Iraque', 'Norway': 'Noruega',
+            'Argentina': 'Argentina', 'Algeria': 'Argélia', 'Austria': 'Áustria', 'Jordan': 'Jordânia',
+            'Portugal': 'Portugal', 'DR Congo': 'RD Congo', 'Uzbekistan': 'Uzbequistão', 'Colombia': 'Colômbia',
+            'England': 'Inglaterra', 'Croatia': 'Croácia', 'Ghana': 'Gana', 'Panama': 'Panamá'
+        };
+
+        function translateCountry(name) {
+            if (currentLang === 'en') {
+                return name;
+            }
+            return countryTranslations[name] || name;
+        }
+
+        function translateStage(fase) {
+            if (currentLang === 'en') {
+                if (fase.startsWith('Grupo ')) {
+                    return fase.replace('Grupo ', 'Group ');
+                }
+                const map = {
+                    '16-avos de Final': 'Round of 32',
+                    'Oitavas de Final': 'Round of 16',
+                    'Quartas de Final': 'Quarter-finals',
+                    'Semifinal': 'Semifinal',
+                    'Disputa do 3º Lugar': '3rd Place Playoff',
+                    'Final': 'Final'
+                };
+                return map[fase] || fase;
+            }
+            return fase;
+        }
+
+        let matches = [];
+
+        async function fetchAndParseSchedule() {
+            try {
+                // Show loading spinner
+                document.getElementById('matchesContainer').innerHTML = `
+                    <div class="text-center my-5 py-5 text-secondary">
+                        <div class="spinner-border text-info mb-3" role="status" style="width: 3rem; height: 3rem;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="fs-5" data-i18n="loadingText">${translations[currentLang].loadingText}</p>
+                    </div>
+                `;
+
+                // Fetch videos.json database
+                try {
+                    const resVideos = await fetch('videos.json');
+                    if (resVideos.ok) {
+                        matchVideos = await resVideos.json();
+                    }
+                } catch (e) {
+                    console.warn("Não foi possível carregar videos.json local. Executando sem vídeos integrados.", e);
+                }
+
+                // Fetch group stage
+                const resCup = await fetch('https://raw.githubusercontent.com/openfootball/worldcup/master/2026--usa/cup.txt');
+                const textCup = await resCup.text();
+
+                // Fetch knockout stage
+                const resFinals = await fetch('https://raw.githubusercontent.com/openfootball/worldcup/master/2026--usa/cup_finals.txt');
+                const textFinals = await resFinals.text();
+
+                const list = [];
+                let matchNum = 1;
+
+                // Parse Group stage
+                const groupBlocks = textCup.split('▪ Group ');
+                for (let i = 1; i < groupBlocks.length; i++) {
+                    const block = groupBlocks[i];
+                    const lines = block.split('\n');
+                    const groupLetter = lines[0].trim();
+                    const fase = 'Grupo ' + groupLetter;
+
+                    let currentDateRaw = '';
+                    for (let j = 1; j < lines.length; j++) {
+                        const line = lines[j].trim();
+                        if (!line) continue;
+
+                        // Check date
+                        if (/^(Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s+[A-Za-z]+\s+\d+$/.test(line)) {
+                            currentDateRaw = line;
+                            continue;
+                        }
+
+                        // Parse match
+                        const m = line.match(/^(\d{2}:\d{2})\s+(UTC[-+]\d+)\s+(.*?)\s+(?:(\d+-\d+(?:\s+\(\d+-\d+\))?)|v)\s+(.*?)\s+@\s+(.*?)$/);
+                        if (m) {
+                            const time = m[1];
+                            const utc = m[2];
+                            const team1 = m[3].trim();
+                            const score = m[4] ? m[4].trim() : '';
+                            const team2 = m[5].trim();
+                            const local = m[6].trim();
+
+                            list.push({
+                                num: String(matchNum).padStart(3, '0'),
+                                fase: fase,
+                                dateRaw: currentDateRaw,
+                                time: time,
+                                utc: utc,
+                                team1: team1,
+                                team2: team2,
+                                f1: flags[team1] || '',
+                                f2: flags[team2] || '',
+                                score: score,
+                                is_vs: score === '',
+                                local: local
+                            });
+                            matchNum++;
+                        }
+                    }
+                }
+
+                // Parse Knockout stage
+                const stages = textFinals.split('▪ ');
+                for (let i = 1; i < stages.length; i++) {
+                    const block = stages[i];
+                    const lines = block.split('\n');
+                    let stageName = lines[0].trim();
+
+                    if (stageName.includes("Round of 32")) stageName = "16-avos de Final";
+                    else if (stageName.includes("Round of 16")) stageName = "Oitavas de Final";
+                    else if (stageName.includes("Quarter-final")) stageName = "Quartas de Final";
+                    else if (stageName.includes("Semi-final")) stageName = "Semifinal";
+                    else if (stageName.includes("Match for third place")) stageName = "Disputa do 3º Lugar";
+                    else if (stageName.includes("Final")) stageName = "Final";
+
+                    let currentDateRaw = '';
+                    for (let j = 1; j < lines.length; j++) {
+                        const line = lines[j].trim();
+                        if (!line) continue;
+
+                        if (/^(Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s+[A-Za-z]+\s+\d+$/.test(line)) {
+                            let normLine = line;
+                            const matchMonth = line.match(/(Jun|Jul)/);
+                            if (matchMonth) {
+                                normLine = line.replace('Jun', 'June').replace('Jul', 'July');
+                            }
+                            currentDateRaw = normLine;
+                            continue;
+                        }
+
+                        const m = line.match(/^\((\d+)\)\s+(\d{2}:\d{2})\s+(UTC[-+]\d+)\s+(.*?)\s+(?:(\d+-\d+(?:\s+\(\d+-\d+\))?)|v)\s+(.*?)\s+@\s+(.*?)$/);
+                        if (m) {
+                            const num = m[1];
+                            const time = m[2];
+                            const utc = m[3];
+                            const team1 = m[4].trim();
+                            const score = m[5] ? m[5].trim() : '';
+                            const team2 = m[6].trim();
+                            const local = m[7].trim();
+
+                            list.push({
+                                num: String(num).padStart(3, '0'),
+                                fase: stageName,
+                                dateRaw: currentDateRaw,
+                                time: time,
+                                utc: utc,
+                                team1: team1,
+                                team2: team2,
+                                f1: flags[team1] || '',
+                                f2: flags[team2] || '',
+                                score: score,
+                                is_vs: score === '',
+                                local: local
+                            });
+                        }
+                    }
+                }
+
+                matches = list.sort((a, b) => parseInt(a.num) - parseInt(b.num));
+
+                populateDateFilter();
+                applyFilters();
+                // Buscar automaticamente novos vídeos do YouTube em segundo plano
+                autoUpdateYouTubeLinks();
+            } catch (err) {
+                console.error("Erro ao carregar dados do GitHub:", err);
+                document.getElementById('matchesContainer').innerHTML = `
+                    <div class="alert alert-danger text-center my-4 rounded-4" role="alert" data-i18n="errorText">
+                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                        ${translations[currentLang].errorText}
+                    </div>
+                `;
+            }
+        }
+
+        async function fetchYouTubePlaylistVideos(playlistId) {
+            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.youtube.com/playlist?list=${playlistId}`)}`;
+            try {
+                const res = await fetch(proxyUrl);
+                if (!res.ok) return [];
+                const data = await res.json();
+                const html = data.contents;
+
+                // Procurar por ytInitialData
+                const rawJsonMatch = html.match(/ytInitialData\s*=\s*({.+?});/);
+                if (!rawJsonMatch) {
+                    const altMatch = html.match(/ytInitialData\s*=\s*({.+?})\s*</);
+                    if (!altMatch) return [];
+                    return extractVideosFromJson(altMatch[1]);
+                }
+                return extractVideosFromJson(rawJsonMatch[1]);
+            } catch (e) {
+                console.warn("Erro ao buscar playlist do YouTube via proxy:", e);
+                return [];
+            }
+        }
+
+        function extractVideosFromJson(jsonStr) {
+            try {
+                const parsed = JSON.parse(jsonStr);
+                const contents = parsed?.contents?.twoColumnBrowseResultsRenderer?.tabs?.[0]?.tabRenderer?.content?.sectionListRenderer?.contents?.[0]?.itemSectionRenderer?.contents?.[0]?.playlistVideoListRenderer?.contents;
+                if (!contents) return [];
+
+                const videos = [];
+                for (const item of contents) {
+                    const renderer = item?.playlistVideoRenderer;
+                    if (renderer) {
+                        const videoId = renderer.videoId;
+                        const title = renderer.title?.runs?.[0]?.text || "";
+                        if (videoId) {
+                            videos.push({
+                                title: title,
+                                url: `https://www.youtube.com/watch?v=${videoId}`
+                            });
+                        }
+                    }
+                }
+                return videos;
+            } catch (e) {
+                console.warn("Erro ao processar JSON da playlist:", e);
+                return [];
+            }
+        }
+
+        function normalizeText(text) {
+            if (!text) return "";
+            text = text.toLowerCase();
+            const replacements = {
+                'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
+                'â': 'a', 'ê': 'e', 'ô': 'o',
+                'ã': 'a', 'õ': 'o',
+                'ç': 'c'
+            };
+            for (const [k, v] of Object.entries(replacements)) {
+                text = text.replaceAll(k, v);
+            }
+            return text;
+        }
+
+        function getTeamVariantsJS(teamName) {
+            if (!teamName) return new Set();
+            const variants = new Set([normalizeText(teamName)]);
+
+            for (const [eng, pt] of Object.entries(countryTranslations)) {
+                if (normalizeText(eng) === normalizeText(teamName)) {
+                    variants.add(normalizeText(pt));
+                } else if (normalizeText(pt) === normalizeText(teamName)) {
+                    variants.add(normalizeText(eng));
+                }
+            }
+
+            const expanded = new Set();
+            for (const v of variants) {
+                expanded.add(v);
+                if (v === "usa" || v === "united states" || v.includes("estados unidos")) {
+                    expanded.add("usa"); expanded.add("united states"); expanded.add("estados unidos");
+                }
+                if (v.includes("dr congo") || v.includes("rd congo")) {
+                    expanded.add("dr congo"); expanded.add("rd congo"); expanded.add("congo");
+                }
+                if (v.includes("bosnia")) {
+                    expanded.add("bosnia & herzegovina"); expanded.add("bosnia and herzegovina"); expanded.add("bosnia e herzegovina"); expanded.add("bosnia");
+                }
+                if (v.includes("czech") || v.includes("tchequia")) {
+                    expanded.add("czech republic"); expanded.add("czechia"); expanded.add("tchequia"); expanded.add("republica tcheca");
+                }
+                if (v.includes("ivory coast") || v.includes("costa do marfim")) {
+                    expanded.add("ivory coast"); expanded.add("costa do marfim");
+                }
+                if (v.includes("south africa") || v.includes("africa do sul")) {
+                    expanded.add("south africa"); expanded.add("africa do sul");
+                }
+                if (v.includes("south korea") || v.includes("coreia do sul")) {
+                    expanded.add("south korea"); expanded.add("coreia do sul");
+                }
+                if (v.includes("cape verde") || v.includes("cabo verde")) {
+                    expanded.add("cape verde"); expanded.add("cabo verde");
+                }
+                if (v.includes("saudi arabia") || v.includes("arabia saudita")) {
+                    expanded.add("saudi arabia"); expanded.add("arabia saudita");
+                }
+                if (v.includes("new zealand") || v.includes("nova zelandia")) {
+                    expanded.add("new zealand"); expanded.add("nova zelandia");
+                }
+            }
+            return expanded;
+        }
+
+        function matchPhaseJS(match, titleNorm) {
+            const fase = match.fase;
+
+            if (fase.startsWith("Grupo")) {
+                const knockoutKeywords = ["oitavas", "quartas", "semifinal", "semi-final", "final", "16-avos", "16 avos", "round of", "3º lugar", "terceiro lugar"];
+                return !knockoutKeywords.some(kw => titleNorm.includes(kw));
+            }
+
+            if (fase === "16-avos de Final") {
+                return titleNorm.includes("16-avos") || titleNorm.includes("16 avos") || titleNorm.includes("32") || titleNorm.includes("round of 32");
+            }
+            if (fase === "Oitavas de Final") {
+                return titleNorm.includes("oitavas") || titleNorm.includes("16") || titleNorm.includes("round of 16");
+            }
+            if (fase === "Quartas de Final") {
+                return titleNorm.includes("quartas") || titleNorm.includes("quarter");
+            }
+            if (fase === "Semifinal") {
+                return titleNorm.includes("semifinal") || titleNorm.includes("semi-final") || titleNorm.includes("semi");
+            }
+            if (fase === "Disputa do 3º Lugar") {
+                return titleNorm.includes("3º lugar") || titleNorm.includes("terceiro") || titleNorm.includes("3rd place") || titleNorm.includes("bronze");
+            }
+            if (fase === "Final") {
+                const isOtherFinal = ["oitavas", "quartas", "semi"].some(kw => titleNorm.includes(kw));
+                return titleNorm.includes("final") && !isOtherFinal;
+            }
+
+            return true;
+        }
+
+        function matchVideoJS(match, videosList, checkKeywords = true) {
+            const t1Variants = getTeamVariantsJS(match.team1);
+            const t2Variants = getTeamVariantsJS(match.team2);
+
+            // Verificar se as duas seleções se enfrentam mais de uma vez na Copa
+            const hasDuplicateMatches = matches.filter(x => {
+                const match1 = (x.team1 === match.team1 && x.team2 === match.team2);
+                const match2 = (x.team1 === match.team2 && x.team2 === match.team1);
+                return match1 || match2;
+            }).length > 1;
+
+            for (const video of videosList) {
+                if (!video.title) continue;
+                const titleNorm = normalizeText(video.title);
+
+                const matchT1 = Array.from(t1Variants).some(v => titleNorm.includes(v));
+                const matchT2 = Array.from(t2Variants).some(v => titleNorm.includes(v));
+
+                if (matchT1 && matchT2) {
+                    // Se houver repetição do confronto, filtramos estritamente pela fase do jogo
+                    if (hasDuplicateMatches && !matchPhaseJS(match, titleNorm)) {
+                        continue;
+                    }
+
+                    if (!checkKeywords) {
+                        return video; // playlist de jogos completos não necessita checar termos extras
+                    }
+                    const isGameVideo = ["melhores momentos", "jogo completo", "gols", "x", "vs", "highlights", "integra", "full match", "transmissao", "ao vivo"].some(x => titleNorm.includes(x));
+                    if (isGameVideo) {
+                        return video;
+                    }
+                }
+            }
+            return null;
+        }
+
+        async function autoUpdateYouTubeLinks() {
+            console.log("Iniciando busca automática de vídeos no YouTube...");
+            const [highlights, fullGames] = await Promise.all([
+                fetchYouTubePlaylistVideos("PLsFWLnYCEXEVNzCnkQE-xOuMc8oLxSleC"),
+                fetchYouTubePlaylistVideos("PLsFWLnYCEXEVWs5wf60vfwUU4FaOEre3D")
+            ]);
+
+            let updated = false;
+            for (const m of matches) {
+                if (/[WL123]/.test(m.team1) || /[WL123]/.test(m.team2)) continue;
+
+                const highlightVideo = matchVideoJS(m, highlights, true);
+                const fullGameVideo = matchVideoJS(m, fullGames, false);
+
+                if (highlightVideo || fullGameVideo) {
+                    if (!matchVideos[m.num]) {
+                        matchVideos[m.num] = {};
+                    }
+                    if (highlightVideo && !matchVideos[m.num].youtube) {
+                        matchVideos[m.num].youtube = highlightVideo.url;
+                        updated = true;
+                    }
+                    if (fullGameVideo && !matchVideos[m.num].youtube_full) {
+                        matchVideos[m.num].youtube_full = fullGameVideo.url;
+                        updated = true;
+                    }
+                }
+            }
+
+            if (updated) {
+                console.log("Novos vídeos encontrados e associados aos jogos na tela!");
+                applyFilters();
+            } else {
+                console.log("Nenhum vídeo novo encontrado nas playlists do YouTube.");
+            }
+        }
+
+        let currentFilter = 'all';
+        const bsModal = new bootstrap.Modal(document.getElementById('videoModal'));
+        const videoPlayer = document.getElementById('videoPlayer');
+        const modalTitle = document.getElementById('videoModalLabel');
+
+        function renderTable(data) {
+            const container = document.getElementById('matchesContainer');
+            container.innerHTML = '';
+
+            let lastFase = '';
+
+            data.forEach(m => {
+                let currentMatchFase = m.fase;
+                let displayHeader = false;
+                let headerText = '';
+                let headerDesc = '';
+
+                if (currentMatchFase.startsWith('Grupo')) {
+                    if (!lastFase.startsWith('Grupo')) {
+                        displayHeader = true;
+                        headerText = currentLang === 'en' ? 'Group Stage' : 'Fase de Grupos';
+                        headerDesc = phaseExplanations[currentLang]['Grupo'];
+                        lastFase = 'Grupo';
+                    }
+                } else {
+                    if (lastFase !== currentMatchFase) {
+                        displayHeader = true;
+                        headerText = translateStage(currentMatchFase);
+                        headerDesc = phaseExplanations[currentLang][currentMatchFase] || '';
+                        lastFase = currentMatchFase;
+                    }
+                }
+
+                if (displayHeader) {
+                    const divider = document.createElement('div');
+                    divider.className = 'phase-divider mt-4 mb-2 p-3 rounded-4 border border-secondary border-opacity-10';
+                    divider.style.background = 'linear-gradient(135deg, rgba(0, 242, 254, 0.05), rgba(22, 28, 45, 0.4))';
+                    divider.innerHTML = `
+                        <h5 class="fw-bold mb-1 text-uppercase small" style="color: #00f2fe; letter-spacing: 0.5px;"><i class="fa-solid fa-circle-info me-2"></i>${headerText}</h5>
+                        <p class="text-secondary small mb-0 fs-7">${headerDesc}</p>
+                    `;
+                    container.appendChild(divider);
+                }
+
+                const card = document.createElement('div');
+                card.className = 'match-card p-3';
+
+                // Confronto formatting - Team 1 on first row, Team 2 on second row, Score on a separate column to the right
+                let scoreHtml = '';
+                if (m.is_vs) {
+                    scoreHtml = `<span class="text-secondary small fw-bold">vs</span>`;
+                } else {
+                    scoreHtml = `<span class="score-box px-2 py-1 bg-secondary bg-opacity-25 text-white rounded fw-bold">${m.score}</span>`;
+                }
+
+                // Parse score for each team
+                let score1 = '-';
+                let score2 = '-';
+                if (!m.is_vs && m.score) {
+                    const mainScore = m.score.split(' ')[0];
+                    const scores = mainScore.split('-');
+                    if (scores.length === 2) {
+                        score1 = scores[0];
+                        score2 = scores[1];
+                    }
+                }
+
+                const t1Translated = translateCountry(m.team1);
+                const t2Translated = translateCountry(m.team2);
+
+                const confrontoHtml = `
+                    <div class="row g-0 align-items-center bg-dark bg-opacity-25 rounded p-2 border border-secondary border-opacity-10 w-100">
+                        <div class="col-12 d-flex flex-column gap-2">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <span class="flag-emoji me-2">${m.f1}</span>
+                                    <span class="text-light fw-semibold">${t1Translated}</span>
+                                </div>
+                                <span class="score-box px-2 py-0.5 bg-secondary bg-opacity-25 text-white rounded fw-bold text-center" style="min-width: 30px;">${score1}</span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <span class="flag-emoji me-2">${m.f2}</span>
+                                    <span class="text-light fw-semibold">${t2Translated}</span>
+                                </div>
+                                <span class="score-box px-2 py-0.5 bg-secondary bg-opacity-25 text-white rounded fw-bold text-center" style="min-width: 30px;">${score2}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Video action button
+                let videoBtn = '';
+                const videoData = matchVideos[m.num];
+                if (videoData) {
+                    let highlightsBtns = '';
+                    if (videoData.local) {
+                        highlightsBtns += `<button class="btn btn-sm btn-play px-2" style="width: auto;" onclick="playVideo('${t1Translated} x ${t2Translated}', '${encodeURIComponent(videoData.local)}')"><i class="fa-solid fa-play"></i> Local</button>`;
+                    }
+                    if (videoData.youtube) {
+                        highlightsBtns += `<a href="${videoData.youtube}" target="_blank" class="btn btn-sm btn-outline-danger px-2" style="width: auto;"><i class="fa-brands fa-youtube"></i> YouTube</a>`;
+                    }
+
+                    if (highlightsBtns) {
+                        videoBtn += `
+                            <div class="w-100">
+                                <div class="text-secondary small fw-bold mb-1" style="font-size: 0.75rem;">${translations[currentLang].matchCardPlayHighlights}:</div>
+                                <div class="d-flex gap-1 justify-content-md-end justify-content-start flex-wrap">${highlightsBtns}</div>
+                            </div>
+                        `;
+                    }
+                    if (videoData.youtube_full) {
+                        videoBtn += `
+                            <div class="mt-2 w-100 d-flex justify-content-md-end justify-content-start">
+                                <a href="${videoData.youtube_full}" target="_blank" class="btn btn-sm btn-outline-warning px-2" style="width: auto;"><i class="fa-brands fa-youtube"></i> ${translations[currentLang].matchCardPlayFull}</a>
+                            </div>
+                        `;
+                    }
+                }
+                if (videoBtn) {
+                    videoBtn = `<div class="d-flex flex-column gap-1 align-items-md-end align-items-start w-100">${videoBtn}</div>`;
+                } else {
+                    videoBtn = `<button class="btn btn-sm btn-disabled px-3 w-100" disabled><i class="fa-solid fa-ban me-1"></i> ${translations[currentLang].matchCardPlayDisabled}</button>`;
+                }
+
+                const dateFormatted = `${translateDate(m.dateRaw)} ${translations[currentLang].matchCardTimeSuffix} ${m.time} (${m.utc})`;
+
+                card.innerHTML = `
+                    <div class="row align-items-center g-3">
+                        <div class="col-2 col-md-1 text-center border-end border-secondary border-opacity-10 py-1">
+                            <span class="game-num">${m.num}</span>
+                        </div>
+                        <div class="col-4 col-md-2 py-1">
+                            <span class="badge-fase">${translateStage(m.fase)}</span>
+                        </div>
+                        <div class="col-12 col-md-4 py-1">
+                            ${confrontoHtml}
+                        </div>
+                        <div class="col-12 col-md-2 py-1">
+                            <div class="fw-semibold text-light mb-1"><i class="fa-regular fa-calendar me-2 text-secondary"></i>${dateFormatted}</div>
+                            <div class="text-secondary small"><i class="fa-solid fa-location-dot me-2 text-secondary"></i>${currentLang === 'en' ? 'Stadium' : 'Estádio'}: ${m.local}</div>
+                        </div>
+                        <div class="col-12 col-md-3 text-md-end py-1">
+                            ${videoBtn}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function updateFilterButtonsText() {
+            // Update groupDropdownBtn
+            const groupBtn = document.getElementById('groupDropdownBtn');
+            if (currentFilter === 'Grupo') {
+                groupBtn.innerHTML = `<i class="fa-solid fa-users me-1"></i> ${translations[currentLang].allGroups}`;
+            } else if (currentFilter.startsWith('Grupo ')) {
+                const letter = currentFilter.replace('Grupo ', '');
+                groupBtn.innerHTML = `<i class="fa-solid fa-users me-1"></i> ${translations[currentLang].matchStageGroup} ${letter}`;
+            } else {
+                groupBtn.innerHTML = `<i class="fa-solid fa-users me-1"></i> ${translations[currentLang].btnGroups}`;
+            }
+
+            // Update knockoutDropdownBtn
+            const knockoutBtn = document.getElementById('knockoutDropdownBtn');
+            if (currentFilter === 'Mata-Mata') {
+                knockoutBtn.innerHTML = `<i class="fa-solid fa-diagram-project me-1"></i> ${translations[currentLang].allKnockouts}`;
+            } else if (['16-avos de Final', 'Oitavas de Final', 'Quartas de Final', 'Semifinal', 'Disputa do 3º Lugar', 'Final'].includes(currentFilter)) {
+                knockoutBtn.innerHTML = `<i class="fa-solid fa-diagram-project me-1"></i> ${translateStage(currentFilter)}`;
+            } else {
+                knockoutBtn.innerHTML = `<i class="fa-solid fa-diagram-project me-1"></i> ${translations[currentLang].btnKnockout}`;
+            }
+
+            // Update dateDropdownBtn
+            const dateBtn = document.getElementById('dateDropdownBtn');
+            if (dateBtn) {
+                if (currentFilter.startsWith('date:')) {
+                    const selectedDate = currentFilter.replace('date:', '');
+                    dateBtn.innerHTML = `<i class="fa-regular fa-calendar me-1"></i> ${translateDate(selectedDate)}`;
+                } else {
+                    dateBtn.innerHTML = `<i class="fa-regular fa-calendar me-1"></i> <span data-i18n="btnDates">${translations[currentLang].btnDates}</span>`;
+                }
+            }
+        }
+
+        function filterStage(stage) {
+            document.querySelectorAll('.btn-outline-secondary, .dropdown-toggle').forEach(btn => btn.classList.remove('active'));
+
+            // Set active class
+            if (window.event && window.event.target && window.event.target.tagName === 'BUTTON') {
+                window.event.target.classList.add('active');
+            } else {
+                const targetBtn = document.querySelector(`[onclick="filterStage('${stage}')"]`);
+                if (targetBtn) targetBtn.classList.add('active');
+            }
+
+            currentFilter = stage;
+            applyFilters();
+        }
+
+        function filterGroup(groupName) {
+            document.querySelectorAll('.btn-outline-secondary, .dropdown-toggle').forEach(btn => btn.classList.remove('active'));
+            const dropdownBtn = document.getElementById('groupDropdownBtn');
+            dropdownBtn.classList.add('active');
+
+            if (groupName === 'all-groups') {
+                currentFilter = 'Grupo';
+            } else {
+                currentFilter = groupName;
+            }
+            applyFilters();
+        }
+
+        function filterKnockout(stageName) {
+            document.querySelectorAll('.btn-outline-secondary, .dropdown-toggle').forEach(btn => btn.classList.remove('active'));
+
+            const dropdownBtn = document.getElementById('knockoutDropdownBtn');
+            dropdownBtn.classList.add('active');
+
+            if (stageName === 'all-knockouts') {
+                currentFilter = 'Mata-Mata';
+            } else {
+                currentFilter = stageName;
+            }
+            applyFilters();
+        }
+
+        function populateDateFilter() {
+            const dateSet = new Set();
+            matches.forEach(m => {
+                if (m.dateRaw) dateSet.add(m.dateRaw);
+            });
+            const uniqueDates = Array.from(dateSet);
+            
+            const dateList = document.getElementById('dateDropdownList');
+            if (!dateList) return;
+            
+            let html = `<li><a class="dropdown-item" href="#" onclick="filterDate('all-dates')" data-i18n="allDates">${translations[currentLang].allDates}</a></li>
+                        <li><hr class="dropdown-divider"></li>`;
+            
+            uniqueDates.forEach(dateRaw => {
+                html += `<li><a class="dropdown-item" href="#" onclick="filterDate('${dateRaw}')">${translateDate(dateRaw)}</a></li>`;
+            });
+            
+            dateList.innerHTML = html;
+        }
+
+        function filterDate(dateRaw) {
+            document.querySelectorAll('.btn-outline-secondary, .dropdown-toggle').forEach(btn => btn.classList.remove('active'));
+            const dropdownBtn = document.getElementById('dateDropdownBtn');
+            if (dropdownBtn) dropdownBtn.classList.add('active');
+
+            if (dateRaw === 'all-dates') {
+                currentFilter = 'all';
+                if (dropdownBtn) dropdownBtn.classList.remove('active');
+                const allBtn = document.querySelector('[onclick="filterStage(\'all\')"]');
+                if (allBtn) allBtn.classList.add('active');
+            } else {
+                currentFilter = 'date:' + dateRaw;
+            }
+            applyFilters();
+        }
+
+        function applyFilters() {
+            updateFilterButtonsText();
+            const query = document.getElementById('searchInput').value.toLowerCase();
+
+            let filtered = matches.filter(m => {
+                const t1Local = translateCountry(m.team1).toLowerCase();
+                const t2Local = translateCountry(m.team2).toLowerCase();
+                const t1Raw = m.team1.toLowerCase();
+                const t2Raw = m.team2.toLowerCase();
+                const stageLocal = translateStage(m.fase).toLowerCase();
+                const stageRaw = m.fase.toLowerCase();
+                const local = m.local.toLowerCase();
+
+                const matchSearch =
+                    t1Local.includes(query) || t1Raw.includes(query) ||
+                    t2Local.includes(query) || t2Raw.includes(query) ||
+                    stageLocal.includes(query) || stageRaw.includes(query) ||
+                    local.includes(query);
+
+                if (!matchSearch) return false;
+
+                if (currentFilter === 'all') return true;
+                if (currentFilter === 'videos') {
+                    const videoData = matchVideos[m.num];
+                    return videoData && (videoData.local || videoData.youtube);
+                }
+                if (currentFilter === 'Grupo') return m.fase.includes('Grupo');
+                if (currentFilter.startsWith('Grupo ')) return m.fase === currentFilter;
+                if (currentFilter === 'Mata-Mata') return !m.fase.includes('Grupo');
+                if (currentFilter.startsWith('date:')) {
+                    const selectedDate = currentFilter.replace('date:', '');
+                    return m.dateRaw === selectedDate;
+                }
+                if (['16-avos de Final', 'Oitavas de Final', 'Quartas de Final', 'Semifinal', 'Disputa do 3º Lugar', 'Final'].includes(currentFilter)) {
+                    return m.fase === currentFilter;
+                }
+
+                return true;
+            });
+
+            renderTable(filtered);
+        }
+
+        function playVideo(title, url) {
+            modalTitle.innerHTML = `<i class="fa-solid fa-circle-play text-danger me-2"></i>${title} - ${translations[currentLang].modalVideoTitle}`;
+            videoPlayer.src = decodeURIComponent(url);
+            bsModal.show();
+        }
+
+        function stopVideo() {
+            videoPlayer.pause();
+            videoPlayer.src = '';
+        }
+
+        function calculateStandings() {
+            const standings = {};
+
+            matches.forEach(m => {
+                if (m.fase.startsWith('Grupo')) {
+                    const grp = m.fase;
+                    if (!standings[grp]) {
+                        standings[grp] = {};
+                    }
+                    if (m.team1 && !standings[grp][m.team1]) {
+                        standings[grp][m.team1] = { name: m.team1, flag: m.f1, p: 0, j: 0, v: 0, e: 0, d: 0, gp: 0, gc: 0, sg: 0 };
+                    }
+                    if (m.team2 && !standings[grp][m.team2]) {
+                        standings[grp][m.team2] = { name: m.team2, flag: m.f2, p: 0, j: 0, v: 0, e: 0, d: 0, gp: 0, gc: 0, sg: 0 };
+                    }
+
+                    if (!m.is_vs && m.score) {
+                        const mainScore = m.score.split(' ')[0];
+                        const scores = mainScore.split('-');
+                        if (scores.length === 2) {
+                            const g1 = parseInt(scores[0]);
+                            const g2 = parseInt(scores[1]);
+
+                            const t1 = standings[grp][m.team1];
+                            const t2 = standings[grp][m.team2];
+
+                            t1.j += 1;
+                            t2.j += 1;
+                            t1.gp += g1;
+                            t1.gc += g2;
+                            t2.gp += g2;
+                            t2.gc += g1;
+                            t1.sg = t1.gp - t1.gc;
+                            t2.sg = t2.gp - t2.gc;
+
+                            if (g1 > g2) {
+                                t1.p += 3;
+                                t1.v += 1;
+                                t2.d += 1;
+                            } else if (g1 < g2) {
+                                t2.p += 3;
+                                t2.v += 1;
+                                t1.d += 1;
+                            } else {
+                                t1.p += 1;
+                                t2.p += 1;
+                                t1.e += 1;
+                                t2.e += 1;
+                            }
+                        }
+                    }
+                }
+            });
+
+            return standings;
+        }
+
+        function updateStandings() {
+            const standings = calculateStandings();
+            const container = document.getElementById('standingsContainer');
+            container.innerHTML = '';
+
+            const sortedGroups = Object.keys(standings).sort();
+
+            sortedGroups.forEach(grp => {
+                const groupTeams = Object.values(standings[grp]);
+                groupTeams.sort((a, b) => {
+                    if (b.p !== a.p) return b.p - a.p;
+                    if (b.sg !== a.sg) return b.sg - a.sg;
+                    return b.gp - a.gp;
+                });
+
+                const card = document.createElement('div');
+                card.className = 'col';
+
+                let rowsHtml = '';
+                groupTeams.forEach((team, idx) => {
+                    const posClass = `pos-${idx + 1}`;
+                    rowsHtml += `
+                        <tr>
+                            <td class="pos-num ${posClass}">${idx + 1}</td>
+                            <td><span class="flag-emoji me-2">${team.flag}</span><span class="fw-semibold text-light">${translateCountry(team.name)}</span></td>
+                            <td class="text-center fw-bold text-info">${team.p}</td>
+                            <td class="text-center">${team.j}</td>
+                            <td class="text-center text-success">${team.v}</td>
+                            <td class="text-center text-warning">${team.e}</td>
+                            <td class="text-center text-danger">${team.d}</td>
+                            <td class="text-center">${team.gp}:${team.gc}</td>
+                            <td class="text-center fw-semibold">${team.sg > 0 ? '+' + team.sg : team.sg}</td>
+                        </tr>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="standings-card">
+                        <h5 class="fw-bold mb-3 text-uppercase" style="color: #00f2fe;"><i class="fa-solid fa-ranking-star me-2"></i>${translateStage(grp)}</h5>
+                        <div class="table-responsive">
+                            <table class="table standings-table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="width: 40px;">#</th>
+                                        <th data-i18n="teamCol">${translations[currentLang].teamCol}</th>
+                                        <th class="text-center" style="width: 50px;" data-i18n="pointsCol">${translations[currentLang].pointsCol}</th>
+                                        <th class="text-center" style="width: 40px;" data-i18n="gamesCol">${translations[currentLang].gamesCol}</th>
+                                        <th class="text-center" style="width: 40px;" data-i18n="winsCol">${translations[currentLang].winsCol}</th>
+                                        <th class="text-center" style="width: 40px;" data-i18n="drawsCol">${translations[currentLang].drawsCol}</th>
+                                        <th class="text-center" style="width: 40px;" data-i18n="lossesCol">${translations[currentLang].lossesCol}</th>
+                                        <th class="text-center" style="width: 70px;" data-i18n="goalsCol">${translations[currentLang].goalsCol}</th>
+                                        <th class="text-center" style="width: 50px;" data-i18n="goalDiffCol">${translations[currentLang].goalDiffCol}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${rowsHtml}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function updateOverallStandings() {
+            const standings = calculateStandings();
+            const allTeams = [];
+
+            Object.keys(standings).forEach(grp => {
+                const groupLetter = grp.replace('Grupo ', '').replace('Group ', '');
+                Object.values(standings[grp]).forEach(team => {
+                    allTeams.push({
+                        ...team,
+                        group: groupLetter
+                    });
+                });
+            });
+
+            // Sort by Points, then Goal Difference, then Goals Scored, then Wins
+            allTeams.sort((a, b) => {
+                if (b.p !== a.p) return b.p - a.p;
+                if (b.sg !== a.sg) return b.sg - a.sg;
+                if (b.gp !== a.gp) return b.gp - a.gp;
+                return b.v - a.v;
+            });
+
+            const tbody = document.getElementById('overallStandingsBody');
+            tbody.innerHTML = '';
+
+            allTeams.forEach((team, idx) => {
+                const tr = document.createElement('tr');
+                let posClass = '';
+                if (idx < 32) {
+                    posClass = 'text-success';
+                } else {
+                    posClass = 'text-danger';
+                }
+
+                tr.innerHTML = `
+                    <td class="pos-num fw-bold text-center ${posClass}">${idx + 1}</td>
+                    <td><span class="flag-emoji me-2">${team.flag}</span><span class="fw-semibold text-light">${translateCountry(team.name)}</span></td>
+                    <td class="text-center text-secondary fw-semibold">${team.group}</td>
+                    <td class="text-center fw-bold text-info">${team.p}</td>
+                    <td class="text-center">${team.j}</td>
+                    <td class="text-center text-success">${team.v}</td>
+                    <td class="text-center text-warning">${team.e}</td>
+                    <td class="text-center text-danger">${team.d}</td>
+                    <td class="text-center">${team.gp}:${team.gc}</td>
+                    <td class="text-center fw-semibold">${team.sg > 0 ? '+' + team.sg : team.sg}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Handle modal hidden event (esc key or clicking outside) to stop playing
+        document.getElementById('videoModal').addEventListener('hidden.bs.modal', stopVideo);
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+        async function fetchLiveMatches() {
+            try {
+                // Endpoint público da ESPN para os jogos da Copa do Mundo
+                const url = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
+                const response = await fetch(url);
+                if (!response.ok) return;
+                const data = await response.json();
+                
+                if (data.events && data.events.length > 0) {
+                    let displayEvent = null;
+                    let eventType = '';
+                    
+                    const liveEvent = data.events.find(e => e.status && e.status.type && e.status.type.state === 'in');
+                    if (liveEvent) {
+                        displayEvent = liveEvent;
+                        eventType = 'live';
+                    } else {
+                        const preEvents = data.events.filter(e => e.status && e.status.type && e.status.type.state === 'pre');
+                        if (preEvents.length > 0) {
+                            displayEvent = preEvents[0];
+                            eventType = 'next';
+                        } else {
+                            const postEvents = data.events.filter(e => e.status && e.status.type && e.status.type.state === 'post');
+                            if (postEvents.length > 0) {
+                                displayEvent = postEvents[postEvents.length - 1];
+                                eventType = 'recent';
+                            }
+                        }
+                    }
+                    
+                    if (displayEvent) {
+                        const comp = displayEvent.competitions[0];
+                        const home = comp.competitors.find(c => c.homeAway === 'home');
+                        const away = comp.competitors.find(c => c.homeAway === 'away');
+                        
+                        document.getElementById('liveTeam1Name').innerText = translateCountry(home.team.displayName);
+                        document.getElementById('liveTeam2Name').innerText = translateCountry(away.team.displayName);
+                        
+                        document.getElementById('liveTeam1Flag').innerText = flags[home.team.displayName] || '🏳️';
+                        document.getElementById('liveTeam2Flag').innerText = flags[away.team.displayName] || '🏳️';
+                        
+                        document.getElementById('liveScore1').innerText = home.score || '0';
+                        document.getElementById('liveScore2').innerText = away.score || '0';
+                        
+                        let team1GoalsHTML = '';
+                        let team2GoalsHTML = '';
+                        if (comp.details) {
+                            const goals = comp.details.filter(d => d.scoringPlay === true);
+                            goals.forEach(g => {
+                                const player = g.athletesInvolved && g.athletesInvolved[0] ? g.athletesInvolved[0].shortName : (currentLang === 'en' ? 'Goal' : 'Gol');
+                                const playerId = g.athletesInvolved && g.athletesInvolved[0] ? g.athletesInvolved[0].id : '';
+                                const playerName = g.athletesInvolved && g.athletesInvolved[0] ? (g.athletesInvolved[0].fullName || player) : player;
+                                const time = g.clock && g.clock.displayValue ? g.clock.displayValue : '';
+                                const goalText = `<div><a href="#" onclick="showPlayerModal('${playerId}', '${playerName.replace(/'/g, "\\'")}', '${time}'); return false;" class="text-decoration-none text-light player-goal-link"><i class="fa-solid fa-futbol text-white opacity-50 me-1" style="font-size: 0.7rem;"></i> <span class="text-decoration-underline" style="text-underline-offset: 2px;">${player}</span> ${time}</a></div>`;
+                                
+                                if (g.team && g.team.id === home.team.id) {
+                                    team1GoalsHTML += goalText;
+                                } else if (g.team && g.team.id === away.team.id) {
+                                    team2GoalsHTML += goalText;
+                                }
+                            });
+                        }
+                        document.getElementById('liveTeam1Goals').innerHTML = team1GoalsHTML;
+                        document.getElementById('liveTeam2Goals').innerHTML = team2GoalsHTML;
+                        
+                        const badge = document.getElementById('liveBadge');
+                        const badgeIcon = document.getElementById('liveBadgeIcon');
+                        const badgeText = document.getElementById('liveBadgeText');
+                        const clockText = document.getElementById('liveClock');
+                        
+                        if (eventType === 'live') {
+                            badge.className = 'position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger shadow';
+                            badge.style.animation = 'pulseLive 2s infinite';
+                            badgeIcon.className = 'fa-solid fa-circle-dot me-1';
+                            badgeText.innerText = translations[currentLang].liveBadge;
+                            clockText.innerText = displayEvent.status.displayClock;
+                        } else if (eventType === 'next') {
+                            badge.className = 'position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning text-dark shadow';
+                            badge.style.animation = 'none';
+                            badgeIcon.className = 'fa-solid fa-calendar-day me-1';
+                            badgeText.innerText = translations[currentLang].nextBadge;
+                            const dateObj = new Date(displayEvent.date);
+                            const locale = currentLang === 'en' ? 'en-US' : 'pt-BR';
+                            const atStr = currentLang === 'en' ? ' at ' : ' às ';
+                            clockText.innerText = dateObj.toLocaleDateString(locale, {day: '2-digit', month: '2-digit'}) + atStr + dateObj.toLocaleTimeString(locale, {hour: '2-digit', minute: '2-digit'});
+                        } else if (eventType === 'recent') {
+                            badge.className = 'position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary shadow';
+                            badge.style.animation = 'none';
+                            badgeIcon.className = 'fa-solid fa-check-circle me-1';
+                            badgeText.innerText = translations[currentLang].recentBadge;
+                            clockText.innerText = translations[currentLang].endOfGame;
+                        }
+                        
+                        document.getElementById('liveMatchDesc').innerText = displayEvent.name;
+                        
+                        document.getElementById('liveMatchContainer').classList.remove('d-none');
+                    } else {
+                        document.getElementById('liveMatchContainer').classList.add('d-none');
+                    }
+                }
+            } catch (e) {
+                console.log("Erro ao buscar jogos ao vivo:", e);
+            }
+        }
+
+        function showPlayerModal(id, name, time) {
+            document.getElementById('playerModalName').innerText = name;
+            document.getElementById('playerModalInfo').innerText = time ? `Marcou gol aos ${time}` : 'Marcou gol';
+            
+            const img = document.getElementById('playerModalPhoto');
+            if (id) {
+                img.src = `https://a.espncdn.com/combiner/i?img=/i/headshots/soccer/players/full/${id}.png`;
+                img.classList.remove('d-none');
+                img.onerror = function() { this.classList.add('d-none'); };
+            } else {
+                img.classList.add('d-none');
+            }
+            
+            const playerModal = new bootstrap.Modal(document.getElementById('playerModal'));
+            playerModal.show();
+        }
+
+        // Init
+        fetchAndParseSchedule();
+        fetchLiveMatches();
+        setInterval(fetchLiveMatches, 60000);
+    </script>
+</body>
+
+</html>

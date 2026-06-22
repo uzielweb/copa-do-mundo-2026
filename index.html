@@ -13,9 +13,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         @keyframes pulseLive {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.05); }
-            100% { opacity: 1; transform: scale(1); }
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(1.05);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         body {
@@ -280,33 +291,45 @@
                     <div class="col-md-10 col-lg-8">
                         <div class="p-3 rounded-4 border border-info border-opacity-25 text-center position-relative shadow-lg"
                             style="background: rgba(22, 28, 45, 0.7); backdrop-filter: blur(12px);">
-                            <span id="liveBadge" class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger shadow" style="font-size: 0.8rem; animation: pulseLive 2s infinite;">
-                                <i id="liveBadgeIcon" class="fa-solid fa-circle-dot me-1"></i> <span id="liveBadgeText">AO VIVO</span>
+                            <span id="liveBadge"
+                                class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger shadow"
+                                style="font-size: 0.8rem; animation: pulseLive 2s infinite;">
+                                <i id="liveBadgeIcon" class="fa-solid fa-circle-dot me-1"></i> <span
+                                    id="liveBadgeText">AO VIVO</span>
                             </span>
                             <div class="d-flex align-items-center justify-content-center gap-4 mt-2">
                                 <!-- Team 1 -->
                                 <div class="d-flex flex-column align-items-center" style="width: 30%;">
                                     <span class="flag-emoji display-4 mb-1" id="liveTeam1Flag">🏳️</span>
-                                    <span class="fw-bold text-light text-truncate w-100" id="liveTeam1Name" style="font-size: 1.1rem;">Time 1</span>
-                                    <div id="liveTeam1Goals" class="small text-secondary mt-1 text-center" style="font-size: 0.8rem; max-height: 60px; overflow-y: auto; scrollbar-width: none;"></div>
+                                    <span class="fw-bold text-light text-truncate w-100" id="liveTeam1Name"
+                                        style="font-size: 1.1rem;">Time 1</span>
+                                    <div id="liveTeam1Goals" class="small text-secondary mt-1 text-center"
+                                        style="font-size: 0.8rem; max-height: 60px; overflow-y: auto; scrollbar-width: none;">
+                                    </div>
                                 </div>
                                 <!-- Score -->
                                 <div class="d-flex flex-column align-items-center">
                                     <div class="d-flex align-items-center gap-2 mb-1">
-                                        <span class="fw-bolder text-info" id="liveScore1" style="font-size: 2.5rem; line-height: 1;">0</span>
+                                        <span class="fw-bolder text-info" id="liveScore1"
+                                            style="font-size: 2.5rem; line-height: 1;">0</span>
                                         <span class="text-secondary fs-4 fw-bold px-2">X</span>
-                                        <span class="fw-bolder text-info" id="liveScore2" style="font-size: 2.5rem; line-height: 1;">0</span>
+                                        <span class="fw-bolder text-info" id="liveScore2"
+                                            style="font-size: 2.5rem; line-height: 1;">0</span>
                                     </div>
                                     <span class="badge bg-info text-dark px-3 py-1 fs-6" id="liveClock">00'</span>
                                 </div>
                                 <!-- Team 2 -->
                                 <div class="d-flex flex-column align-items-center" style="width: 30%;">
                                     <span class="flag-emoji display-4 mb-1" id="liveTeam2Flag">🏳️</span>
-                                    <span class="fw-bold text-light text-truncate w-100" id="liveTeam2Name" style="font-size: 1.1rem;">Time 2</span>
-                                    <div id="liveTeam2Goals" class="small text-secondary mt-1 text-center" style="font-size: 0.8rem; max-height: 60px; overflow-y: auto; scrollbar-width: none;"></div>
+                                    <span class="fw-bold text-light text-truncate w-100" id="liveTeam2Name"
+                                        style="font-size: 1.1rem;">Time 2</span>
+                                    <div id="liveTeam2Goals" class="small text-secondary mt-1 text-center"
+                                        style="font-size: 0.8rem; max-height: 60px; overflow-y: auto; scrollbar-width: none;">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="mt-3 text-secondary small fw-semibold" id="liveMatchDesc">Copa do Mundo FIFA 2026</div>
+                            <div class="mt-3 text-secondary small fw-semibold" id="liveMatchDesc">Copa do Mundo FIFA
+                                2026</div>
                         </div>
                     </div>
                 </div>
@@ -323,8 +346,10 @@
                                     Oficial</span>
                             </div>
                             <div class="row g-3 justify-content-center">
-                                <div class="col-12 col-md-6 col-lg-3 d-flex flex-column align-items-center">
-                                    <span class="small mb-1 text-center" data-i18n="opCombined">Abertura Geral (México, Canadá e EUA)</span>
+                                <div
+                                    class="col-12 col-md-6 col-lg-3 d-flex flex-column align-items-center justify-content-between">
+                                    <span class="small mb-1 text-center" data-i18n="opCombined">Abertura Geral (México,
+                                        Canadá e EUA)</span>
                                     <div class="d-flex gap-1 justify-content-center flex-wrap">
                                         <button class="btn btn-sm btn-play px-2" style="width: auto;"
                                             onclick="playVideo('Abertura Geral (México, Canadá e EUA)', 'Aberturas/CONFIRA%20TODOS%20OS%20SHOWS%20DE%20ABERTURA%20DA%20COPA%20DO%20MUNDO%20FIFA%E2%84%A2%202026%20%EF%BD%9C%20M%C3%89XICO%2C%20CANAD%C3%81%20E%20ESTADOS%20UNIDOS.mp4')"><i
@@ -334,8 +359,10 @@
                                                 class="fa-brands fa-youtube"></i> YouTube</a>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3 d-flex flex-column align-items-center">
-                                    <span class="small mb-1 text-center" data-i18n="opMexico">Abertura - México (Estádio Azteca)</span>
+                                <div
+                                    class="col-12 col-md-6 col-lg-3 d-flex flex-column align-items-center justify-content-between">
+                                    <span class="small mb-1 text-center" data-i18n="opMexico">Abertura - México (Estádio
+                                        Azteca)</span>
                                     <div class="d-flex gap-1 justify-content-center flex-wrap">
                                         <button class="btn btn-sm btn-play px-2" style="width: auto;"
                                             onclick="playVideo('Cerimônia de Abertura - México', 'Aberturas/CONFIRA%20A%20CERIM%C3%94NIA%20DE%20ABERTURA%20DA%20COPA%20DIRETO%20DO%20EST%C3%81DIO%20AZTECA%20%EF%BD%9C%20COPA%20DO%20MUNDO%20FIFA%E2%84%A2%202026.mp4')"><i
@@ -345,8 +372,10 @@
                                                 class="fa-brands fa-youtube"></i> YouTube</a>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3 d-flex flex-column align-items-center">
-                                    <span class="small mb-1 text-center" data-i18n="opCanada">Abertura - Canadá (Toronto)</span>
+                                <div
+                                    class="col-12 col-md-6 col-lg-3 d-flex flex-column align-items-center justify-content-between">
+                                    <span class="small mb-1 text-center" data-i18n="opCanada">Abertura - Canadá
+                                        (Toronto)</span>
                                     <div class="d-flex gap-1 justify-content-center flex-wrap">
                                         <button class="btn btn-sm btn-play px-2" style="width: auto;"
                                             onclick="playVideo('Cerimônia de Abertura - Canadá', 'Aberturas/CONFIRA%20A%20CERIM%C3%94NIA%20DE%20ABERTURA%20DO%20CANAD%C3%81%20DIRETO%20DO%20TORONTO%20STADIUM%20%EF%BD%9C%20COPA%20DO%20MUNDO%20FIFA%E2%84%A2%202026.mp4')"><i
@@ -356,8 +385,10 @@
                                                 class="fa-brands fa-youtube"></i> YouTube</a>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3 d-flex flex-column align-items-center">
-                                    <span class="small mb-1 text-center" data-i18n="opUsa">Abertura - EUA (Los Angeles)</span>
+                                <div
+                                    class="col-12 col-md-6 col-lg-3 d-flex flex-column align-items-center justify-content-between">
+                                    <span class="small mb-1 text-center" data-i18n="opUsa">Abertura - EUA (Los
+                                        Angeles)</span>
                                     <div class="d-flex gap-1 justify-content-center flex-wrap">
                                         <button class="btn btn-sm btn-play px-2" style="width: auto;"
                                             onclick="playVideo('Cerimônia de Abertura - EUA', 'Aberturas/CONFIRA%20A%20CERIM%C3%94NIA%20DOS%20EUA%20DE%20ABERTURA%20DA%20COPA%20COM%20ANITTA%20E%20LISA%20%EF%BD%9C%20COPA%20DO%20MUNDO%20FIFA%E2%84%A2%202026.mp4')"><i
@@ -520,7 +551,8 @@
                                             <i class="fa-regular fa-calendar me-1"></i> <span id="btnDateText"
                                                 data-i18n="btnDates">Datas</span>
                                         </button>
-                                        <ul class="dropdown-menu dropdown-menu-end" id="dateDropdownList" style="max-height: 300px; overflow-y: auto;">
+                                        <ul class="dropdown-menu dropdown-menu-end" id="dateDropdownList"
+                                            style="max-height: 300px; overflow-y: auto;">
                                             <!-- Dynamically populated -->
                                         </ul>
                                     </div>
@@ -729,16 +761,23 @@
     <!-- Bootstrap Player Modal -->
     <div class="modal fade" id="playerModal" tabindex="-1" aria-labelledby="playerModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content border border-secondary border-opacity-25 shadow-lg" style="background: rgba(22, 28, 45, 0.95); backdrop-filter: blur(12px);">
+            <div class="modal-content border border-secondary border-opacity-25 shadow-lg"
+                style="background: rgba(22, 28, 45, 0.95); backdrop-filter: blur(12px);">
                 <div class="modal-header border-bottom border-secondary border-opacity-10 position-relative">
-                    <h6 class="modal-title font-weight-bold text-info w-100 text-center" id="playerModalLabel"><i class="fa-solid fa-star me-2"></i>Craque do Gol</h6>
-                    <button type="button" class="btn-close btn-close-white position-absolute top-50 end-0 translate-middle-y me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h6 class="modal-title font-weight-bold text-info w-100 text-center" id="playerModalLabel"><i
+                            class="fa-solid fa-star me-2"></i>Craque do Gol</h6>
+                    <button type="button"
+                        class="btn-close btn-close-white position-absolute top-50 end-0 translate-middle-y me-3"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center p-4">
-                    <img id="playerModalPhoto" src="" alt="Foto do Jogador" class="img-fluid rounded-circle shadow-lg mb-3 d-none" style="width: 140px; height: 140px; object-fit: cover; border: 3px solid #00f2fe; background-color: #0b0f19;">
+                    <img id="playerModalPhoto" src="" alt="Foto do Jogador"
+                        class="img-fluid rounded-circle shadow-lg mb-3 d-none"
+                        style="width: 140px; height: 140px; object-fit: cover; border: 3px solid #00f2fe; background-color: #0b0f19;">
                     <h5 id="playerModalName" class="fw-bold text-light mb-1">Nome</h5>
                     <p id="playerModalInfo" class="text-secondary mb-3 small">Gol aos 00'</p>
-                    <p class="text-muted" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-info me-1"></i>Vídeo individual não disponível na API.</p>
+                    <p class="text-muted" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-info me-1"></i>Vídeo
+                        individual não disponível na API.</p>
                 </div>
             </div>
         </div>
@@ -979,7 +1018,7 @@
             if (document.getElementById('overall-standings-tab').classList.contains('active')) {
                 updateOverallStandings();
             }
-            
+
             // Update live match widget translations
             fetchLiveMatches();
         }
@@ -1649,17 +1688,17 @@
                 if (m.dateRaw) dateSet.add(m.dateRaw);
             });
             const uniqueDates = Array.from(dateSet);
-            
+
             const dateList = document.getElementById('dateDropdownList');
             if (!dateList) return;
-            
+
             let html = `<li><a class="dropdown-item" href="#" onclick="filterDate('all-dates')" data-i18n="allDates">${translations[currentLang].allDates}</a></li>
                         <li><hr class="dropdown-divider"></li>`;
-            
+
             uniqueDates.forEach(dateRaw => {
                 html += `<li><a class="dropdown-item" href="#" onclick="filterDate('${dateRaw}')">${translateDate(dateRaw)}</a></li>`;
             });
-            
+
             dateList.innerHTML = html;
         }
 
@@ -1916,11 +1955,11 @@
                 const response = await fetch(url);
                 if (!response.ok) return;
                 const data = await response.json();
-                
+
                 if (data.events && data.events.length > 0) {
                     let displayEvent = null;
                     let eventType = '';
-                    
+
                     const liveEvent = data.events.find(e => e.status && e.status.type && e.status.type.state === 'in');
                     if (liveEvent) {
                         displayEvent = liveEvent;
@@ -1938,21 +1977,21 @@
                             }
                         }
                     }
-                    
+
                     if (displayEvent) {
                         const comp = displayEvent.competitions[0];
                         const home = comp.competitors.find(c => c.homeAway === 'home');
                         const away = comp.competitors.find(c => c.homeAway === 'away');
-                        
+
                         document.getElementById('liveTeam1Name').innerText = translateCountry(home.team.displayName);
                         document.getElementById('liveTeam2Name').innerText = translateCountry(away.team.displayName);
-                        
+
                         document.getElementById('liveTeam1Flag').innerText = flags[home.team.displayName] || '🏳️';
                         document.getElementById('liveTeam2Flag').innerText = flags[away.team.displayName] || '🏳️';
-                        
+
                         document.getElementById('liveScore1').innerText = home.score || '0';
                         document.getElementById('liveScore2').innerText = away.score || '0';
-                        
+
                         let team1GoalsHTML = '';
                         let team2GoalsHTML = '';
                         if (comp.details) {
@@ -1963,7 +2002,7 @@
                                 const playerName = g.athletesInvolved && g.athletesInvolved[0] ? (g.athletesInvolved[0].fullName || player) : player;
                                 const time = g.clock && g.clock.displayValue ? g.clock.displayValue : '';
                                 const goalText = `<div><a href="#" onclick="showPlayerModal('${playerId}', '${playerName.replace(/'/g, "\\'")}', '${time}'); return false;" class="text-decoration-none text-light player-goal-link"><i class="fa-solid fa-futbol text-white opacity-50 me-1" style="font-size: 0.7rem;"></i> <span class="text-decoration-underline" style="text-underline-offset: 2px;">${player}</span> ${time}</a></div>`;
-                                
+
                                 if (g.team && g.team.id === home.team.id) {
                                     team1GoalsHTML += goalText;
                                 } else if (g.team && g.team.id === away.team.id) {
@@ -1973,12 +2012,12 @@
                         }
                         document.getElementById('liveTeam1Goals').innerHTML = team1GoalsHTML;
                         document.getElementById('liveTeam2Goals').innerHTML = team2GoalsHTML;
-                        
+
                         const badge = document.getElementById('liveBadge');
                         const badgeIcon = document.getElementById('liveBadgeIcon');
                         const badgeText = document.getElementById('liveBadgeText');
                         const clockText = document.getElementById('liveClock');
-                        
+
                         if (eventType === 'live') {
                             badge.className = 'position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger shadow';
                             badge.style.animation = 'pulseLive 2s infinite';
@@ -1993,7 +2032,7 @@
                             const dateObj = new Date(displayEvent.date);
                             const locale = currentLang === 'en' ? 'en-US' : 'pt-BR';
                             const atStr = currentLang === 'en' ? ' at ' : ' às ';
-                            clockText.innerText = dateObj.toLocaleDateString(locale, {day: '2-digit', month: '2-digit'}) + atStr + dateObj.toLocaleTimeString(locale, {hour: '2-digit', minute: '2-digit'});
+                            clockText.innerText = dateObj.toLocaleDateString(locale, { day: '2-digit', month: '2-digit' }) + atStr + dateObj.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
                         } else if (eventType === 'recent') {
                             badge.className = 'position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary shadow';
                             badge.style.animation = 'none';
@@ -2001,9 +2040,9 @@
                             badgeText.innerText = translations[currentLang].recentBadge;
                             clockText.innerText = translations[currentLang].endOfGame;
                         }
-                        
+
                         document.getElementById('liveMatchDesc').innerText = displayEvent.name;
-                        
+
                         document.getElementById('liveMatchContainer').classList.remove('d-none');
                     } else {
                         document.getElementById('liveMatchContainer').classList.add('d-none');
@@ -2017,16 +2056,16 @@
         function showPlayerModal(id, name, time) {
             document.getElementById('playerModalName').innerText = name;
             document.getElementById('playerModalInfo').innerText = time ? `Marcou gol aos ${time}` : 'Marcou gol';
-            
+
             const img = document.getElementById('playerModalPhoto');
             if (id) {
                 img.src = `https://a.espncdn.com/combiner/i?img=/i/headshots/soccer/players/full/${id}.png`;
                 img.classList.remove('d-none');
-                img.onerror = function() { this.classList.add('d-none'); };
+                img.onerror = function () { this.classList.add('d-none'); };
             } else {
                 img.classList.add('d-none');
             }
-            
+
             const playerModal = new bootstrap.Modal(document.getElementById('playerModal'));
             playerModal.show();
         }

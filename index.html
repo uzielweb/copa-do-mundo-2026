@@ -175,6 +175,19 @@
             padding: 1.25rem;
         }
 
+        .rules-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .rules-card:hover {
+            border-color: rgba(0, 242, 254, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
         .standings-table th,
         .standings-table td {
             padding: 0.6rem 0.75rem;
@@ -731,6 +744,48 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <!-- Card 5: Regras Detalhadas da Fase de Grupos -->
+                                <div class="col-12 mt-2">
+                                    <div class="rules-card">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <i class="fa-solid fa-users fa-2x me-3 text-success"></i>
+                                            <h6 class="fw-bold mb-0 text-info text-uppercase" data-i18n="ruleFaseDeGrupos">Fase de Grupos (Detalhado)</h6>
+                                        </div>
+                                        <div class="ps-5">
+                                            <p class="small text-secondary mb-3" data-i18n="ruleFaseDeGruposDesc">
+                                                A Copa do Mundo de 2026 terá o maior formato da história, com 48 seleções divididas em 12 grupos de 4 equipes. Pela primeira vez, 32 seleções avançam para o mata-mata.
+                                            </p>
+                                            <ul class="small text-secondary ps-3 mb-0">
+                                                <li class="mb-2" data-i18n="ruleFaseDeGruposItem1"><strong class="text-light">Classificação Direta:</strong> Os dois primeiros colocados de cada um dos 12 grupos garantem vaga automática, totalizando 24 seleções.</li>
+                                                <li class="mb-2" data-i18n="ruleFaseDeGruposItem2"><strong class="text-light">Repescagem dos Terceiros:</strong> Os 8 melhores terceiros colocados no geral também avançam, completando as 32 vagas para a fase de 16-avos de final.</li>
+                                                <li class="mb-2" data-i18n="ruleFaseDeGruposItem3"><strong class="text-light">Desempate:</strong> Os critérios de desempate seguem a ordem: Pontos, Saldo de Gols, Gols Pró, Confronto Direto, Fair Play e Sorteio.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 6: Fases Eliminatórias (Mata-Mata) -->
+                                <div class="col-12 mt-2">
+                                    <div class="rules-card">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <i class="fa-solid fa-sitemap fa-2x me-3 text-warning"></i>
+                                            <h6 class="fw-bold mb-0 text-info text-uppercase" data-i18n="ruleMataMata">Fases Eliminatórias (Mata-Mata)</h6>
+                                        </div>
+                                        <div class="ps-5">
+                                            <p class="small text-secondary mb-3" data-i18n="ruleMataMataDesc">
+                                                Após a fase de grupos, 32 seleções entram em disputa direta (jogos únicos). Em caso de empate, há prorrogação de 30 minutos e, se necessário, pênaltis.
+                                            </p>
+                                            <ul class="small text-secondary ps-3 mb-0">
+                                                <li class="mb-2" data-i18n="ruleStage16Item"><strong class="text-light">16-avos de Final:</strong> Fase inédita com 32 equipes. Metade é eliminada logo no primeiro jogo do mata-mata.</li>
+                                                <li class="mb-2" data-i18n="ruleStage8Item"><strong class="text-light">Oitavas de Final:</strong> As 16 seleções vencedoras da fase anterior duelam em formato tradicional.</li>
+                                                <li class="mb-2" data-i18n="ruleStage4Item"><strong class="text-light">Quartas de Final:</strong> Os 8 melhores países disputam as quatro vagas para as semifinais.</li>
+                                                <li class="mb-2" data-i18n="ruleStageSemiItem"><strong class="text-light">Semifinais:</strong> Os 4 sobreviventes jogam pela sonhada vaga na Grande Final.</li>
+                                                <li class="mb-2" data-i18n="ruleStage3rdItem"><strong class="text-light">Disputa do 3º Lugar:</strong> Jogo de honra entre os perdedores das semifinais pela medalha de bronze.</li>
+                                                <li class="mb-2" data-i18n="ruleStageFinalItem"><strong class="text-light">Grande Final:</strong> O confronto máximo do futebol que decide o campeão do planeta.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -880,7 +935,20 @@
                 liveBadge: "AO VIVO",
                 nextBadge: "PRÓXIMO JOGO",
                 recentBadge: "ENCERRADO",
-                endOfGame: "Fim de Jogo"
+                endOfGame: "Fim de Jogo",
+                ruleFaseDeGrupos: "Fase de Grupos (Detalhado)",
+                ruleFaseDeGruposDesc: "A Copa do Mundo de 2026 terá o maior formato da história, com 48 seleções divididas em 12 grupos de 4 equipes. Pela primeira vez, 32 seleções avançam para o mata-mata.",
+                ruleFaseDeGruposItem1: "<strong class=\"text-light\">Classificação Direta:</strong> Os dois primeiros colocados de cada um dos 12 grupos garantem vaga automática, totalizando 24 seleções.",
+                ruleFaseDeGruposItem2: "<strong class=\"text-light\">Repescagem dos Terceiros:</strong> Os 8 melhores terceiros colocados no geral também avançam, completando as 32 vagas para a fase de 16-avos de final.",
+                ruleFaseDeGruposItem3: "<strong class=\"text-light\">Desempate:</strong> Os critérios de desempate seguem a ordem: Pontos, Saldo de Gols, Gols Pró, Confronto Direto, Fair Play e Sorteio.",
+                ruleMataMata: "Fases Eliminatórias (Mata-Mata)",
+                ruleMataMataDesc: "Após a fase de grupos, 32 seleções entram em disputa direta (jogos únicos). Em caso de empate, há prorrogação de 30 minutos e, se necessário, pênaltis.",
+                ruleStage16Item: "<strong class=\"text-light\">16-avos de Final:</strong> Fase inédita com 32 equipes. Metade é eliminada logo no primeiro jogo do mata-mata.",
+                ruleStage8Item: "<strong class=\"text-light\">Oitavas de Final:</strong> As 16 seleções vencedoras da fase anterior duelam em formato tradicional.",
+                ruleStage4Item: "<strong class=\"text-light\">Quartas de Final:</strong> Os 8 melhores países disputam as quatro vagas para as semifinais.",
+                ruleStageSemiItem: "<strong class=\"text-light\">Semifinais:</strong> Os 4 sobreviventes jogam pela sonhada vaga na Grande Final.",
+                ruleStage3rdItem: "<strong class=\"text-light\">Disputa do 3º Lugar:</strong> Jogo de honra entre os perdedores das semifinais pela medalha de bronze.",
+                ruleStageFinalItem: "<strong class=\"text-light\">Grande Final:</strong> O confronto máximo do futebol que decide o campeão do planeta."
             },
             en: {
                 title: "FIFA World Cup 2026",
@@ -950,7 +1018,20 @@
                 liveBadge: "LIVE",
                 nextBadge: "UPCOMING",
                 recentBadge: "FINISHED",
-                endOfGame: "Full Time"
+                endOfGame: "Full Time",
+                ruleFaseDeGrupos: "Group Stage (Detailed)",
+                ruleFaseDeGruposDesc: "The 2026 World Cup features the largest format in history, with 48 teams divided into 12 groups of 4. For the first time, 32 teams will advance to the knockout stage.",
+                ruleFaseDeGruposItem1: "<strong class=\"text-light\">Direct Qualification:</strong> The top two teams from each of the 12 groups automatically secure their spots, totaling 24 teams.",
+                ruleFaseDeGruposItem2: "<strong class=\"text-light\">Best Third-Placed:</strong> The 8 best overall third-placed teams also advance, completing the 32 spots for the Round of 32.",
+                ruleFaseDeGruposItem3: "<strong class=\"text-light\">Tiebreakers:</strong> The tiebreaker criteria are: Points, Goal Difference, Goals Scored, Head-to-Head, Fair Play, and Drawing of Lots.",
+                ruleMataMata: "Knockout Stages",
+                ruleMataMataDesc: "After the group stage, 32 teams enter a single-elimination bracket. If tied after 90 minutes, a 30-minute extra time is played, followed by a penalty shootout if necessary.",
+                ruleStage16Item: "<strong class=\"text-light\">Round of 32:</strong> A brand new phase featuring 32 teams. Half are eliminated right in the first knockout match.",
+                ruleStage8Item: "<strong class=\"text-light\">Round of 16:</strong> The 16 winning teams move forward in the traditional format.",
+                ruleStage4Item: "<strong class=\"text-light\">Quarter-finals:</strong> The top 8 countries compete for the four spots in the semifinals.",
+                ruleStageSemiItem: "<strong class=\"text-light\">Semifinals:</strong> The 4 survivors play for a spot in the Grand Final.",
+                ruleStage3rdItem: "<strong class=\"text-light\">3rd Place Playoff:</strong> The match of honor between the semifinal losers for the bronze medal.",
+                ruleStageFinalItem: "<strong class=\"text-light\">Grand Final:</strong> The ultimate football showdown that crowns the champion of the planet."
             }
         };
 
@@ -1164,62 +1245,177 @@
                     }
                 }
 
-                // Parse Knockout stage
-                const stages = textFinals.split('▪ ');
-                for (let i = 1; i < stages.length; i++) {
-                    const block = stages[i];
-                    const lines = block.split('\n');
-                    let stageName = lines[0].trim();
+                // Definição estática do mata-mata da Copa do Mundo 2026
+                const knockoutBracket = [
+                    { num: '073', fase: '16-avos de Final', dateRaw: 'Sun June 28', time: '12:00', utc: 'UTC-7', team1_slot: '2A', team2_slot: '2B', local: 'Los Angeles (Inglewood)' },
+                    { num: '074', fase: '16-avos de Final', dateRaw: 'Mon June 29', time: '16:30', utc: 'UTC-4', team1_slot: '1E', team2_slot: '3A/B/C/D/F', local: 'Boston (Foxborough)' },
+                    { num: '075', fase: '16-avos de Final', dateRaw: 'Mon June 29', time: '19:00', utc: 'UTC-6', team1_slot: '1F', team2_slot: '2C', local: 'Monterrey (Guadalupe)' },
+                    { num: '076', fase: '16-avos de Final', dateRaw: 'Mon June 29', time: '12:00', utc: 'UTC-5', team1_slot: '1C', team2_slot: '2F', local: 'Houston' },
+                    { num: '077', fase: '16-avos de Final', dateRaw: 'Tue June 30', time: '17:00', utc: 'UTC-4', team1_slot: '1I', team2_slot: '3C/D/F/G/H', local: 'New York/New Jersey (East Rutherford)' },
+                    { num: '078', fase: '16-avos de Final', dateRaw: 'Tue June 30', time: '12:00', utc: 'UTC-5', team1_slot: '2E', team2_slot: '2I', local: 'Dallas (Arlington)' },
+                    { num: '079', fase: '16-avos de Final', dateRaw: 'Tue June 30', time: '19:00', utc: 'UTC-6', team1_slot: '1A', team2_slot: '3C/E/F/H/I', local: 'Mexico City' },
+                    { num: '080', fase: '16-avos de Final', dateRaw: 'Wed July 1', time: '12:00', utc: 'UTC-4', team1_slot: '1L', team2_slot: '3E/H/I/J/K', local: 'Atlanta' },
+                    { num: '081', fase: '16-avos de Final', dateRaw: 'Wed July 1', time: '17:00', utc: 'UTC-7', team1_slot: '1D', team2_slot: '3B/E/F/I/J', local: 'San Francisco Bay Area (Santa Clara)' },
+                    { num: '082', fase: '16-avos de Final', dateRaw: 'Wed July 1', time: '13:00', utc: 'UTC-7', team1_slot: '1G', team2_slot: '3A/E/H/I/J', local: 'Seattle' },
+                    { num: '083', fase: '16-avos de Final', dateRaw: 'Thu July 2', time: '17:00', utc: 'UTC-4', team1_slot: '2D', team2_slot: '2G', local: 'Toronto' },
+                    { num: '084', fase: '16-avos de Final', dateRaw: 'Thu July 2', time: '19:00', utc: 'UTC-7', team1_slot: '1H', team2_slot: '2J', local: 'Los Angeles (Inglewood)' },
+                    { num: '085', fase: '16-avos de Final', dateRaw: 'Thu July 2', time: '12:00', utc: 'UTC-5', team1_slot: '1B', team2_slot: '3E/F/G/I/J', local: 'Houston' },
+                    { num: '086', fase: '16-avos de Final', dateRaw: 'Fri July 3', time: '16:00', utc: 'UTC-4', team1_slot: '1J', team2_slot: '2H', local: 'Miami (Miami Gardens)' },
+                    { num: '087', fase: '16-avos de Final', dateRaw: 'Fri July 3', time: '12:00', utc: 'UTC-5', team1_slot: '1K', team2_slot: '3D/E/I/J/L', local: 'Kansas City' },
+                    { num: '088', fase: '16-avos de Final', dateRaw: 'Fri July 3', time: '19:00', utc: 'UTC-5', team1_slot: '2K', team2_slot: '2L', local: 'Dallas (Arlington)' },
 
-                    if (stageName.includes("Round of 32")) stageName = "16-avos de Final";
-                    else if (stageName.includes("Round of 16")) stageName = "Oitavas de Final";
-                    else if (stageName.includes("Quarter-final")) stageName = "Quartas de Final";
-                    else if (stageName.includes("Semi-final")) stageName = "Semifinal";
-                    else if (stageName.includes("Match for third place")) stageName = "Disputa do 3º Lugar";
-                    else if (stageName.includes("Final")) stageName = "Final";
+                    { num: '089', fase: 'Oitavas de Final', dateRaw: 'Sat July 4', time: '15:00', utc: 'UTC-4', team1_slot: 'W74', team2_slot: 'W77', local: 'Philadelphia' },
+                    { num: '090', fase: 'Oitavas de Final', dateRaw: 'Sat July 4', time: '20:00', utc: 'UTC-5', team1_slot: 'W73', team2_slot: 'W75', local: 'Houston' },
+                    { num: '091', fase: 'Oitavas de Final', dateRaw: 'Sun July 5', time: '16:00', utc: 'UTC-4', team1_slot: 'W76', team2_slot: 'W78', local: 'New York/New Jersey (East Rutherford)' },
+                    { num: '092', fase: 'Oitavas de Final', dateRaw: 'Sun July 5', time: '20:00', utc: 'UTC-6', team1_slot: 'W79', team2_slot: 'W80', local: 'Mexico City' },
+                    { num: '093', fase: 'Oitavas de Final', dateRaw: 'Mon July 6', time: '17:00', utc: 'UTC-5', team1_slot: 'W83', team2_slot: 'W84', local: 'Dallas (Arlington)' },
+                    { num: '094', fase: 'Oitavas de Final', dateRaw: 'Mon July 6', time: '19:00', utc: 'UTC-7', team1_slot: 'W81', team2_slot: 'W82', local: 'Seattle' },
+                    { num: '095', fase: 'Oitavas de Final', dateRaw: 'Tue July 7', time: '16:00', utc: 'UTC-4', team1_slot: 'W86', team2_slot: 'W88', local: 'Atlanta' },
+                    { num: '096', fase: 'Oitavas de Final', dateRaw: 'Tue July 7', time: '19:00', utc: 'UTC-7', team1_slot: 'W85', team2_slot: 'W87', local: 'San Francisco Bay Area (Santa Clara)' },
 
-                    let currentDateRaw = '';
-                    for (let j = 1; j < lines.length; j++) {
-                        const line = lines[j].trim();
-                        if (!line) continue;
+                    { num: '097', fase: 'Quartas de Final', dateRaw: 'Thu July 9', time: '20:00', utc: 'UTC-4', team1_slot: 'W89', team2_slot: 'W90', local: 'Boston (Foxborough)' },
+                    { num: '098', fase: 'Quartas de Final', dateRaw: 'Fri July 10', time: '19:00', utc: 'UTC-7', team1_slot: 'W93', team2_slot: 'W94', local: 'Los Angeles (Inglewood)' },
+                    { num: '099', fase: 'Quartas de Final', dateRaw: 'Sat July 11', time: '20:00', utc: 'UTC-4', team1_slot: 'W91', team2_slot: 'W92', local: 'Miami (Miami Gardens)' },
+                    { num: '100', fase: 'Quartas de Final', dateRaw: 'Sat July 11', time: '19:00', utc: 'UTC-5', team1_slot: 'W95', team2_slot: 'W96', local: 'Kansas City' },
 
-                        if (/^(Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s+[A-Za-z]+\s+\d+$/.test(line)) {
-                            let normLine = line;
-                            const matchMonth = line.match(/(Jun|Jul)/);
-                            if (matchMonth) {
-                                normLine = line.replace('Jun', 'June').replace('Jul', 'July');
-                            }
-                            currentDateRaw = normLine;
-                            continue;
-                        }
+                    { num: '101', fase: 'Semifinal', dateRaw: 'Tue July 14', time: '20:00', utc: 'UTC-5', team1_slot: 'W97', team2_slot: 'W98', local: 'Dallas (Arlington)' },
+                    { num: '102', fase: 'Semifinal', dateRaw: 'Wed July 15', time: '20:00', utc: 'UTC-4', team1_slot: 'W99', team2_slot: 'W100', local: 'Atlanta' },
 
-                        const m = line.match(/^\((\d+)\)\s+(\d{2}:\d{2})\s+(UTC[-+]\d+)\s+(.*?)\s+(?:(\d+-\d+(?:\s+\(\d+-\d+\))?)|v)\s+(.*?)\s+@\s+(.*?)$/);
-                        if (m) {
-                            const num = m[1];
-                            const time = m[2];
-                            const utc = m[3];
-                            const team1 = m[4].trim();
-                            const score = m[5] ? m[5].trim() : '';
-                            const team2 = m[6].trim();
-                            const local = m[7].trim();
+                    { num: '103', fase: 'Disputa do 3º Lugar', dateRaw: 'Sat July 18', time: '20:00', utc: 'UTC-4', team1_slot: 'L101', team2_slot: 'L102', local: 'Miami (Miami Gardens)' },
+                    { num: '104', fase: 'Final', dateRaw: 'Sun July 19', time: '15:00', utc: 'UTC-4', team1_slot: 'W101', team2_slot: 'W102', local: 'New York/New Jersey (East Rutherford)' }
+                ];
 
-                            list.push({
-                                num: String(num).padStart(3, '0'),
-                                fase: stageName,
-                                dateRaw: currentDateRaw,
-                                time: time,
-                                utc: utc,
-                                team1: team1,
-                                team2: team2,
-                                f1: flags[team1] || '',
-                                f2: flags[team2] || '',
-                                score: score,
-                                is_vs: score === '',
-                                local: local
-                            });
-                        }
+                matches = list.sort((a, b) => parseInt(a.num) - parseInt(b.num));
+
+                // Mapear os resultados dos grupos para o chaveamento
+                // Mapear os resultados dos grupos para o chaveamento
+                const currentStandings = calculateStandings();
+
+                // Resolver os 8 melhores terceiros colocados
+                const thirdPlacedTeams = [];
+                Object.keys(currentStandings).forEach(group => {
+                    const teams = Object.values(currentStandings[group]);
+                    teams.sort((a, b) => {
+                        if (b.p !== a.p) return b.p - a.p;
+                        if (b.sg !== a.sg) return b.sg - a.sg;
+                        return b.gp - a.gp;
+                    });
+                    if (teams.length >= 3 && teams[2].name) {
+                        thirdPlacedTeams.push({
+                            groupLetter: group.replace('Grupo ', ''),
+                            team: teams[2]
+                        });
                     }
+                });
+
+                // Ordenar os terceiros colocados globalmente
+                thirdPlacedTeams.sort((a, b) => {
+                    if (b.team.p !== a.team.p) return b.team.p - a.team.p;
+                    if (b.team.sg !== a.team.sg) return b.team.sg - a.team.sg;
+                    return b.team.gp - a.team.gp;
+                });
+
+                const top8Thirds = thirdPlacedTeams.slice(0, 8);
+                const thirdAssignments = {};
+
+                if (top8Thirds.length === 8) {
+                    const slotsConfig = [
+                        { id: '3A/B/C/D/F', allowed: ['A', 'B', 'C', 'D', 'F'] },
+                        { id: '3C/D/F/G/H', allowed: ['C', 'D', 'F', 'G', 'H'] },
+                        { id: '3C/E/F/H/I', allowed: ['C', 'E', 'F', 'H', 'I'] },
+                        { id: '3E/H/I/J/K', allowed: ['E', 'H', 'I', 'J', 'K'] },
+                        { id: '3B/E/F/I/J', allowed: ['B', 'E', 'F', 'I', 'J'] },
+                        { id: '3A/E/H/I/J', allowed: ['A', 'E', 'H', 'I', 'J'] },
+                        { id: '3E/F/G/I/J', allowed: ['E', 'F', 'G', 'I', 'J'] },
+                        { id: '3D/E/I/J/L', allowed: ['D', 'E', 'I', 'J', 'L'] }
+                    ];
+
+                    const groupsAvail = top8Thirds.map(t => t.groupLetter);
+
+                    // Backtracking para encaixar os 8 melhores terceiros nos slots permitidos
+                    function solve(slotIndex, avail) {
+                        if (slotIndex === slotsConfig.length) return true;
+                        const slot = slotsConfig[slotIndex];
+                        for (let i = 0; i < avail.length; i++) {
+                            const grp = avail[i];
+                            if (slot.allowed.includes(grp)) {
+                                thirdAssignments[slot.id] = top8Thirds.find(t => t.groupLetter === grp).team.name;
+                                const nextAvail = [...avail];
+                                nextAvail.splice(i, 1);
+                                if (solve(slotIndex + 1, nextAvail)) return true;
+                            }
+                        }
+                        return false;
+                    }
+                    solve(0, groupsAvail);
                 }
+
+                function getTeamNameBySlot(slot) {
+                    if (!slot) return '';
+                    // Verifica se o slot aponta diretamente para o Vencedor ou Vice de um grupo (ex: 1A, 2B)
+                    const directMatch = slot.match(/^([1-2])([A-L])$/);
+                    if (directMatch) {
+                        const pos = parseInt(directMatch[1]);
+                        const group = 'Grupo ' + directMatch[2];
+                        if (currentStandings[group]) {
+                            const groupTeams = Object.values(currentStandings[group]);
+                            groupTeams.sort((a, b) => {
+                                if (b.p !== a.p) return b.p - a.p;
+                                if (b.sg !== a.sg) return b.sg - a.sg;
+                                return b.gp - a.gp;
+                            });
+
+                            // Apenas define a seleção se o grupo estiver concluído ou parcialmente definido de forma segura
+                            // Mas para a UX vamos mostrar o time se ele estiver na posição atualmente
+                            if (groupTeams.length > pos - 1 && groupTeams[pos - 1].name) {
+                                return groupTeams[pos - 1].name;
+                            }
+                        }
+                        return (pos === 1 ? 'Vencedor do Grupo ' : '2º do Grupo ') + directMatch[2];
+                    }
+
+                    // Se for um Vencedor de Jogo (W74, etc)
+                    if (slot.startsWith('W')) {
+                        const matchNum = slot.replace('W', '').padStart(3, '0');
+                        return 'Vencedor ' + matchNum;
+                    }
+
+                    // Se for um Perdedor de Jogo (L101, etc)
+                    if (slot.startsWith('L')) {
+                        const matchNum = slot.replace('L', '').padStart(3, '0');
+                        return 'Perdedor ' + matchNum;
+                    }
+
+                    // Se for Terceiros Colocados (ex: 3A/B/C/D/F)
+                    if (slot.startsWith('3')) {
+                        if (thirdAssignments[slot]) {
+                            return thirdAssignments[slot];
+                        }
+                        return '3º de ' + slot.replace('3', '');
+                    }
+
+                    return slot;
+                }
+
+                knockoutBracket.forEach(m => {
+                    const team1 = getTeamNameBySlot(m.team1_slot);
+                    const team2 = getTeamNameBySlot(m.team2_slot);
+
+                    list.push({
+                        num: m.num,
+                        fase: m.fase,
+                        dateRaw: m.dateRaw,
+                        time: m.time,
+                        utc: m.utc,
+                        team1: team1,
+                        team2: team2,
+                        f1: flags[team1] || '',
+                        f2: flags[team2] || '',
+                        score: '',
+                        is_vs: true,
+                        local: m.local
+                    });
+                });
 
                 matches = list.sort((a, b) => parseInt(a.num) - parseInt(b.num));
 

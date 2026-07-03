@@ -105,7 +105,7 @@ def parse_schedule():
                 current_date = translate_date(line)
                 continue
             
-            m = re.match(r'^(\d{2}:\d{2})\s+(UTC[-+]\d+)\s+(.*?)\s+(?:(\d+-\d+(?:\s+\(\d+-\d+\))?)|v)\s+(.*?)\s+@\s+(.*?)$', line)
+            m = re.match(r'^(\d{2}:\d{2})\s+(UTC[-+]\d+)\s+(.*?)\s+(\d+-\d+(?:\s+a\.e\.t\.)?(?:\s+\([\d\s,-]+\))?(?:,\s+\d+-\d+\s+pen\.)?|v)\s+(.*?)\s+@\s+(.*?)$', line)
             if m:
                 time, utc, team1, score, team2, local = m.groups()
                 team1 = team1.strip()
@@ -148,7 +148,7 @@ def parse_schedule():
                 current_date = translate_date(norm_line)
                 continue
             
-            m = re.match(r'^\((\d+)\)\s+(\d{2}:\d{2})\s+(UTC[-+]\d+)\s+(.*?)\s+(?:(\d+-\d+(?:\s+\(\d+-\d+\))?)|v)\s+(.*?)\s+@\s+(.*?)$', line)
+            m = re.match(r'^\((\d+)\)\s+(\d{2}:\d{2})\s+(UTC[-+]\d+)\s+(.*?)\s+(\d+-\d+(?:\s+a\.e\.t\.)?(?:\s+\([\d\s,-]+\))?(?:,\s+\d+-\d+\s+pen\.)?|v)\s+(.*?)\s+@\s+(.*?)$', line)
             if m:
                 num, time, utc, team1, score, team2, local = m.groups()
                 team1 = team1.strip()

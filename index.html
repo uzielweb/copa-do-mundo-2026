@@ -1104,6 +1104,33 @@
             fetchLiveMatches();
         }
 
+        function getLocalMatchDate(dateRaw, timeStr, utcStr) {
+            try {
+                const parts = dateRaw.split(/\s+/);
+                if (parts.length !== 3) return null;
+                const month = parts[1];
+                const day = parts[2];
+                const offsetMatch = utcStr.match(/UTC([-+]\d+)/);
+                let offset = "-0000";
+                if (offsetMatch) {
+                    let num = parseInt(offsetMatch[1], 10);
+                    let sign = num < 0 ? "-" : "+";
+                    let absNum = Math.abs(num);
+                    offset = sign + String(absNum).padStart(2, '0') + "00";
+                }
+                const dateString = `${month} ${day}, 2026 ${timeStr}:00 GMT${offset}`;
+                const dateObj = new Date(dateString);
+                if (isNaN(dateObj)) return null;
+                
+                return {
+                    dateObj: dateObj,
+                    timeLabel: dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+                };
+            } catch(e) {
+                return null;
+            }
+        }
+
         function translateDate(dateStr) {
             if (!dateStr) return "";
             const parts = dateStr.split(/\s+/);
@@ -1139,6 +1166,11 @@
 
         function translateCountry(name) {
             if (currentLang === 'en') {
+                if (name.startsWith('Vencedor do Jogo ')) return name.replace('Vencedor do Jogo ', 'Winner of Match ');
+                if (name.startsWith('Perdedor do Jogo ')) return name.replace('Perdedor do Jogo ', 'Loser of Match ');
+                if (name.startsWith('Vencedor do Grupo ')) return name.replace('Vencedor do Grupo ', 'Winner Group ');
+                if (name.startsWith('2º do Grupo ')) return name.replace('2º do Grupo ', 'Runner-up Group ');
+                if (name.startsWith('3º de ')) return name.replace('3º de ', '3rd of ');
                 return name;
             }
             return countryTranslations[name] || name;
@@ -1193,6 +1225,20 @@
                 // Fetch knockout stage
                 const resFinals = await fetch('https://raw.githubusercontent.com/openfootball/worldcup/master/2026--usa/cup_finals.txt');
                 const textFinals = await resFinals.text();
+
+                const parsedFinals = {};
+                const finalLines = textFinals.split('\n');
+                for (const line of finalLines) {
+                    const matchM = line.match(/^\s*\((\d+)\)\s+\d{2}:\d{2}\s+UTC[-+]\d+\s+(.*?)\s+(\d+-\d+[^A-Z]*|v)\s+([A-Z].*?)\s+@/);
+                    if (matchM) {
+                        const numStr = String(matchM[1]).padStart(3, '0');
+                        parsedFinals[numStr] = {
+                            t1: matchM[2].trim(),
+                            t2: matchM[4].trim(),
+                            score: matchM[3].trim() === 'v' ? '' : matchM[3].trim()
+                        };
+                    }
+                }
 
                 const list = [];
                 let matchNum = 1;
@@ -1377,13 +1423,13 @@
                     // Se for um Vencedor de Jogo (W74, etc)
                     if (slot.startsWith('W')) {
                         const matchNum = slot.replace('W', '').padStart(3, '0');
-                        return 'Vencedor ' + matchNum;
+                        return 'Vencedor do Jogo ' + parseInt(matchNum, 10);
                     }
 
                     // Se for um Perdedor de Jogo (L101, etc)
                     if (slot.startsWith('L')) {
                         const matchNum = slot.replace('L', '').padStart(3, '0');
-                        return 'Perdedor ' + matchNum;
+                        return 'Perdedor do Jogo ' + parseInt(matchNum, 10);
                     }
 
                     // Se for Terceiros Colocados (ex: 3A/B/C/D/F)
@@ -1398,8 +1444,17 @@
                 }
 
                 knockoutBracket.forEach(m => {
-                    const team1 = getTeamNameBySlot(m.team1_slot);
-                    const team2 = getTeamNameBySlot(m.team2_slot);
+                    let team1 = getTeamNameBySlot(m.team1_slot);
+                    let team2 = getTeamNameBySlot(m.team2_slot);
+                    let score = '';
+                    let is_vs = true;
+
+                    if (parsedFinals[m.num]) {
+                        team1 = parsedFinals[m.num].t1;
+                        team2 = parsedFinals[m.num].t2;
+                        score = parsedFinals[m.num].score;
+                        is_vs = (score === '');
+                    }
 
                     list.push({
                         num: m.num,
@@ -1411,8 +1466,8 @@
                         team2: team2,
                         f1: flags[team1] || '',
                         f2: flags[team2] || '',
-                        score: '',
-                        is_vs: true,
+                        score: score,
+                        is_vs: is_vs,
                         local: m.local
                     });
                 });
@@ -1776,7 +1831,27 @@
                     videoBtn = `<button class="btn btn-sm btn-disabled px-3 w-100" disabled><i class="fa-solid fa-ban me-1"></i> ${translations[currentLang].matchCardPlayDisabled}</button>`;
                 }
 
-                const dateFormatted = `${translateDate(m.dateRaw)} ${translations[currentLang].matchCardTimeSuffix} ${m.time} (${m.utc})`;
+                let dateFormatted = `${translateDate(m.dateRaw)} ${translations[currentLang].matchCardTimeSuffix} ${m.time} (${m.utc})`;
+                
+                const localInfo = getLocalMatchDate(m.dateRaw, m.time, m.utc);
+                if (localInfo) {
+                    const localTime = localInfo.timeLabel;
+                    const localDay = localInfo.dateObj.getDate();
+                    const localMonthIndex = localInfo.dateObj.getMonth();
+                    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    const localMonth = monthNames[localMonthIndex];
+                    const dayWIndex = localInfo.dateObj.getDay();
+                    const daysWNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+                    const localDayW = daysWNames[dayWIndex];
+                    
+                    const localDateRaw = `${localDayW} ${localMonth} ${localDay}`;
+                    const localDateTranslated = translateDate(localDateRaw);
+                    
+                    const localSuffix = currentLang === 'en' ? 'Local Time' : 'Horário Local';
+                    const stadiumSuffix = currentLang === 'en' ? 'Stadium Time' : 'Horário do Estádio';
+                    
+                    dateFormatted = `<span class="text-info fw-bold">${localDateTranslated} - ${localTime}</span> <span class="text-secondary small">(${localSuffix})</span><span class="d-block text-secondary small ms-4 mt-1" style="font-size: 0.75rem; opacity: 0.8;">↳ ${m.time} (${m.utc}) - ${stadiumSuffix}</span>`;
+                }
 
                 card.innerHTML = `
                     <div class="row align-items-center g-3">
